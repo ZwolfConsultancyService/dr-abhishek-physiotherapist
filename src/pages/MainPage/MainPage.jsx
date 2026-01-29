@@ -154,14 +154,14 @@ const MainPage = () => {
       </div>
 
       {/* Testimonial Section - Flip Up */}
-      <div 
+      {/* <div 
         data-aos="flip-up" 
         data-aos-duration="1400"
         data-aos-delay="150"
         data-aos-offset="150"
       >
         <TestimonialSection />
-      </div>
+      </div> */}
 
       {/* Latest Blogs - Fade Right */}
       <div 

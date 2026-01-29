@@ -1,143 +1,153 @@
 import React, { useState, useEffect } from "react";
-import { Search, Calendar } from "lucide-react";
+import { Search, Calendar, User, Tag } from "lucide-react";
+import { useParams, useNavigate } from 'react-router-dom';
 
-// NOTE: Import this in your actual file
-// import { useParams, useNavigate } from 'react-router-dom';
-
-// ==================== BLOG POSTS DATA ====================
-const blogPostsData = {
-  "how-we-can-cover-injury-pain-by-exercise": {
-    id: 1,
-    title: "How We Can Cover Injury Pain By Exercise",
-    slug: "how-we-can-cover-injury-pain-by-exercise",
-    image:
-      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=600&fit=crop",
-    author: "admin",
-    date: "July 12, 2023",
-    category: "exercise",
-    comments: 0,
-    content: `Libero enim sed faucibus turpis. Sed viverra tellus in hac habitasse platea dictumst. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.`,
-  },
-  "are-the-grains-good-or-bad-for-you": {
-    id: 2,
-    title: "Are The Grains Good Or Bad For You?",
-    slug: "are-the-grains-good-or-bad-for-you",
-    image:
-      "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop",
-    author: "admin",
-    date: "July 12, 2023",
-    category: "exercise",
-    comments: 0,
-    content: `Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna neque. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisl ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.`,
-  },
-  "the-inflammation-diet-to-detox-approach": {
-    id: 3,
-    title: "The Inflammation - Diet To Detox Approach",
-    slug: "the-inflammation-diet-to-detox-approach",
-    image:
-      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&h=600&fit=crop",
-    author: "admin",
-    date: "July 12, 2023",
-    category: "wellness",
-    comments: 0,
-    content: `Consectetur adipiscing elit pellentesque habitant morbi tristique senectus et netus. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-  },
-  "the-12-benefits-of-practicing-the-yoga": {
-    id: 4,
-    title: "The 12 Benefits Of Practicing The Yoga",
-    slug: "the-12-benefits-of-practicing-the-yoga",
-    image:
-      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=600&fit=crop",
-    author: "admin",
-    date: "July 12, 2023",
-    category: "wellness",
-    comments: 0,
-    content: `Yoga provides numerous benefits for both physical and mental health. Taking seamless key performance indicators offline to maximise the long tail. From improved flexibility to stress reduction, regular yoga practice can transform your life in meaningful ways.`,
-  },
-};
+const API_BASE_URL = "https://dr-abhishek-physiotherapist-backend.onrender.com/api";
 
 export default function BlogDetailPage() {
-  // NOTE: In your actual component, use:
-  // const { slug } = useParams();
-  // const navigate = useNavigate();
-
-  // For demo, getting slug from URL
-  const getSlugFromURL = () => {
-    const path = window.location.pathname;
-    const parts = path.split("/");
-    return (
-      parts[parts.length - 1] || "how-we-can-cover-injury-pain-by-exercise"
-    );
-  };
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentSlug, setCurrentSlug] = useState(getSlugFromURL());
-
-  // Get blog post data based on slug
-  const blogPost =
-    blogPostsData[currentSlug] ||
-    blogPostsData["how-we-can-cover-injury-pain-by-exercise"];
+  const [blogPost, setBlogPost] = useState(null);
+  const [recentNews, setRecentNews] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [currentSlug]);
+    if (id) {
+      fetchBlogDetail();
+      fetchSidebarData();
+    }
+  }, [id]);
 
-  const recentNews = [
-    {
-      title: "How We Can Cover Injury Pain By Exercise",
-      slug: "how-we-can-cover-injury-pain-by-exercise",
-      image:
-        "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=200&h=150&fit=crop",
-      date: "July 12, 2023",
-    },
-    {
-      title: "Are The Grains Good Or Bad For You?",
-      slug: "are-the-grains-good-or-bad-for-you",
-      image:
-        "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=200&h=150&fit=crop",
-      date: "July 12, 2023",
-    },
-    {
-      title: "The Inflammation - Diet To Detox Approach",
-      slug: "the-inflammation-diet-to-detox-approach",
-      image:
-        "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=200&h=150&fit=crop",
-      date: "July 12, 2023",
-    },
-    {
-      title: "The 12 Benefits Of Practicing The Yoga",
-      slug: "the-12-benefits-of-practicing-the-yoga",
-      image:
-        "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&h=150&fit=crop",
-      date: "July 12, 2023",
-    },
-  ];
+  // ✅ Helper function to get image URL
+  const getImageUrl = (blog) => {
+    if (blog.images && blog.images.length > 0 && blog.images[0].url) {
+      return blog.images[0].url;
+    }
+    if (blog.image) return blog.image;
+    if (blog.featuredImage) return blog.featuredImage;
+    if (blog.thumbnail) return blog.thumbnail;
+    return "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d";
+  };
 
-  const categories = [
-    { name: "Exercise", count: 2 },
-    { name: "Wellness", count: 2 },
-  ];
+  const fetchBlogDetail = async () => {
+    try {
+      setLoading(true);
+      console.log("🔍 Fetching blog with ID:", id);
+      
+      const response = await fetch(`${API_BASE_URL}/blog/${id}`);
+      console.log("📡 Response status:", response.status);
+      
+      if (!response.ok) throw new Error("Failed to fetch blog");
+      const data = await response.json();
+      console.log("📥 Blog data received:", data);
+      
+      let blog = null;
+      if (data && data._id) {
+        blog = data;
+      } else if (data.data && data.data._id) {
+        blog = data.data;
+      } else if (data.blog && data.blog._id) {
+        blog = data.blog;
+      }
+      
+      console.log("✅ Processed blog:", blog);
+      console.log("🖼️ Blog image URL:", blog ? getImageUrl(blog) : "No blog");
+      
+      setBlogPost(blog);
+      setLoading(false);
+    } catch (err) {
+      console.error("❌ Error fetching blog detail:", err);
+      setError(err.message);
+      setLoading(false);
+    }
+  };
 
-  const tags = [
-    "Chiropractic",
-    "Clinic",
-    "Exercise",
-    "Physio",
-    "Spine Pain",
-    "Wellness",
-  ];
+  const fetchSidebarData = async () => {
+    try {
+      const blogsResponse = await fetch(`${API_BASE_URL}/blog`);
+      if (!blogsResponse.ok) return;
+      
+      const blogsData = await blogsResponse.json();
+      
+      let blogs = [];
+      if (Array.isArray(blogsData)) {
+        blogs = blogsData;
+      } else if (blogsData.data && Array.isArray(blogsData.data)) {
+        blogs = blogsData.data;
+      } else if (blogsData.blogs && Array.isArray(blogsData.blogs)) {
+        blogs = blogsData.blogs;
+      }
+      
+      setRecentNews(blogs.slice(0, 4));
+      
+      const uniqueCategories = [...new Set(blogs.map(blog => blog.category).filter(Boolean))];
+      const categoriesWithCount = uniqueCategories.map(cat => ({
+        name: cat,
+        count: blogs.filter(blog => blog.category === cat).length
+      }));
+      setCategories(categoriesWithCount);
+      
+      const allTags = blogs.flatMap(blog => blog.tags || []);
+      const uniqueTags = [...new Set(allTags)];
+      setTags(uniqueTags);
+    } catch (err) {
+      console.error("Error fetching sidebar data:", err);
+    }
+  };
 
   const handleSearch = () => {
-    console.log("Searching for:", searchQuery);
+    if (searchQuery.trim()) {
+      navigate(`/blog?search=${searchQuery}`);
+    }
   };
 
   const handleNavigation = (path) => {
-    window.location.href = path;
+    navigate(path);
   };
 
-  const handleRecentNewsClick = (slug) => {
-    window.location.href = `/blog/${slug}`;
+  const handleRecentNewsClick = (newsId) => {
+    navigate(`/blog/${newsId}`);
   };
+
+  const handleCategoryClick = (categoryName) => {
+    navigate(`/blog?tags=${categoryName}`);
+  };
+
+  const handleTagClick = (tagName) => {
+    navigate(`/blog?tags=${tagName}`);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 mt-12 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-pink-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading blog...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !blogPost) {
+    return (
+      <div className="min-h-screen bg-gray-50 mt-12 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Error: {error || "Blog not found"}</p>
+          <button 
+            onClick={() => navigate('/blog')}
+            className="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600"
+          >
+            Back to Blogs
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 mt-12">
@@ -145,7 +155,7 @@ export default function BlogDetailPage() {
       <div
         className="relative h-[300px] bg-cover bg-center"
         style={{
-          backgroundImage: `url('${blogPost.image}')`,
+          backgroundImage: `url('${getImageUrl(blogPost)}')`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/40"></div>
@@ -170,7 +180,7 @@ export default function BlogDetailPage() {
               Blog
             </button>
             <span>/</span>
-            <span className="text-white">{blogPost.title}</span>
+            <span className="text-white truncate max-w-[200px]">{blogPost.title}</span>
           </nav>
         </div>
       </div>
@@ -185,75 +195,61 @@ export default function BlogDetailPage() {
                 {/* Featured Image */}
                 <div className="relative h-[400px] sm:h-[500px] overflow-hidden">
                   <img
-                    src={blogPost.image}
+                    src={getImageUrl(blogPost)}
                     alt={blogPost.title}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      console.error("Image load error");
+                      e.target.src = "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d";
+                    }}
                   />
                 </div>
 
                 {/* Content */}
                 <div className="p-6 sm:p-8 lg:p-12">
                   {/* Date Badge */}
-                  <div className="inline-block bg-blue-600 text-white text-xs  uppercase px-4 py-2 rounded mb-6">
-                    {blogPost.date}
+                  <div className="inline-block bg-pink-500 text-white text-xs uppercase px-4 py-2 rounded mb-6">
+                    {new Date(blogPost.createdAt || blogPost.date || Date.now()).toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}
                   </div>
 
                   {/* Meta Info */}
                   <div className="flex flex-wrap items-center gap-4 text-gray-500 text-sm mb-8">
                     <div className="flex items-center gap-2">
+                      <User className="w-4 h-4" />
                       <span>By:</span>
-                      <span className="text-gray-700 ">{blogPost.author}</span>
+                      <span className="text-gray-700">{blogPost.author || "Admin"}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-700 capitalize">
-                        {blogPost.category}
-                      </span>
-                    </div>
+                    {blogPost.tags && blogPost.tags.length > 0 && (
+                      <div className="flex items-center gap-2">
+                        <Tag className="w-4 h-4" />
+                        <span className="text-gray-700 capitalize">
+                          {blogPost.tags[0]}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Main Content */}
                   <div className="prose max-w-none">
-                    <p className="text-gray-700 text-base leading-relaxed mb-6">
-                      {blogPost.content}
-                    </p>
-
-                    {/* Two Column Section */}
-                    <h2 className="text-2xl sm:text-3xl  text-[#0a1f44] mt-12 mb-6">
-                      Two Column Text Sample
-                    </h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                      <div>
-                        <p className="text-gray-700 text-base leading-relaxed">
-                          Nam libero tempore, cum soluta nobis est eligendi
-                          optio cumque nihil impedit quo minus id quod maxime
-                          placeat facere possimus, omnis voluptas assumenda est.
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-700 text-base leading-relaxed">
-                          Nam libero tempore, cum soluta nobis est eligendi
-                          optio cumque nihil impedit quo minus id quod maxime
-                          placeat facere possimus, omnis voluptas assumenda est.
-                        </p>
-                      </div>
-                    </div>
-
-                    <p className="text-gray-700 text-base leading-relaxed mb-4">
-                      Here is main text quis nostrud exercitation ullamco
-                      laboris nisi here is itealic text ut aliquip ex ea commodo
-                      consequat. Duis aute irure dolor in reprehenderit in
-                      voluptate velit esse cillum dolore eu fugiat nulla
-                      pariatur. Excepteur sint occaecat{" "}
-                      <a
-                        href="#"
-                        className="text-pink-500 underline hover:text-pink-600"
-                      >
-                        here is link
-                      </a>{" "}
-                      cupidatat nonproident, sunt in culpa qui officia deserunt
-                      mollit anim id est laborum.
-                    </p>
+                    {blogPost.content ? (
+                      <div 
+                        className="text-gray-700 text-base leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: blogPost.content }}
+                      />
+                    ) : blogPost.description ? (
+                      <div 
+                        className="text-gray-700 text-base leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: blogPost.description }}
+                      />
+                    ) : (
+                      <p className="text-gray-700 text-base leading-relaxed">
+                        {blogPost.excerpt || "No content available."}
+                      </p>
+                    )}
                   </div>
                 </div>
               </article>
@@ -283,71 +279,89 @@ export default function BlogDetailPage() {
                 </div>
 
                 {/* Categories Widget */}
-                <div className="bg-white rounded-xl shadow-lg p-6">
-                  <h3 className="text-xl  text-[#0a1f44] mb-6 pb-3 border-b-2 border-pink-500">
-                    Categories
-                  </h3>
-                  <ul className="space-y-3">
-                    {categories.map((category, index) => (
-                      <li key={index}>
-                        <button className="text-gray-700 hover:text-pink-500 transition-colors flex items-center gap-2">
-                          <span className="w-2 h-2 bg-pink-500 rounded-full"></span>
-                          {category.name} ({category.count})
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {categories.length > 0 && (
+                  <div className="bg-white rounded-xl shadow-lg p-6">
+                    <h3 className="text-xl text-[#0a1f44] mb-6 pb-3 border-b-2 border-pink-500">
+                      Categories
+                    </h3>
+                    <ul className="space-y-3">
+                      {categories.map((category, index) => (
+                        <li key={index}>
+                          <button 
+                            onClick={() => handleCategoryClick(category.name)}
+                            className="text-gray-700 hover:text-pink-500 transition-colors flex items-center gap-2 w-full text-left"
+                          >
+                            <span className="w-2 h-2 bg-pink-500 rounded-full"></span>
+                            <span className="capitalize">{category.name}</span>
+                            <span className="ml-auto text-gray-400">({category.count})</span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 {/* Recent News Widget */}
-                <div className="bg-white rounded-xl shadow-lg p-6">
-                  <h3 className="text-xl  text-[#0a1f44] mb-6 pb-3 border-b-2 border-pink-500">
-                    Recent News
-                  </h3>
-                  <div className="space-y-4">
-                    {recentNews.map((news, index) => (
-                      <div
-                        key={index}
-                        onClick={() => handleRecentNewsClick(news.slug)}
-                        className="flex gap-4 group cursor-pointer"
-                      >
-                        <div className="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
-                          <img
-                            src={news.image}
-                            alt={news.title}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                          />
+                {recentNews.length > 0 && (
+                  <div className="bg-white rounded-xl shadow-lg p-6">
+                    <h3 className="text-xl text-[#0a1f44] mb-6 pb-3 border-b-2 border-pink-500">
+                      Recent News
+                    </h3>
+                    <div className="space-y-4">
+                      {recentNews.map((news, index) => (
+                        <div
+                          key={index}
+                          onClick={() => handleRecentNewsClick(news._id || news.id)}
+                          className="flex gap-4 group cursor-pointer"
+                        >
+                          <div className="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
+                            <img
+                              src={getImageUrl(news)}
+                              alt={news.title}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              onError={(e) => {
+                                e.target.src = "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&h=150&fit=crop";
+                              }}
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="text-sm text-gray-800 group-hover:text-pink-500 transition-colors mb-2 line-clamp-2">
+                              {news.title}
+                            </h4>
+                            <p className="text-xs text-gray-500 flex items-center gap-1">
+                              <Calendar className="w-3 h-3" />
+                              {new Date(news.createdAt || news.date || Date.now()).toLocaleDateString('en-US', { 
+                                year: 'numeric', 
+                                month: 'long', 
+                                day: 'numeric' 
+                              })}
+                            </p>
+                          </div>
                         </div>
-                        <div className="flex-1">
-                          <h4 className="text-sm  text-gray-800 group-hover:text-pink-500 transition-colors mb-2 line-clamp-2">
-                            {news.title}
-                          </h4>
-                          <p className="text-xs text-gray-500 flex items-center gap-1">
-                            <Calendar className="w-3 h-3" />
-                            {news.date}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Tags Widget */}
-                <div className="bg-white rounded-xl shadow-lg p-6">
-                  <h3 className="text-xl text-[#0a1f44] mb-6 pb-3 border-b-2 border-pink-500">
-                    Tags
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {tags.map((tag, index) => (
-                      <button
-                        key={index}
-                        className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-pink-500 hover:text-white transition-all duration-300 text-sm"
-                      >
-                        {tag}
-                      </button>
-                    ))}
+                {tags.length > 0 && (
+                  <div className="bg-white rounded-xl shadow-lg p-6">
+                    <h3 className="text-xl text-[#0a1f44] mb-6 pb-3 border-b-2 border-pink-500">
+                      Tags
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {tags.map((tag, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleTagClick(tag)}
+                          className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-pink-500 hover:text-white transition-all duration-300 text-sm capitalize"
+                        >
+                          {tag}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </aside>
           </div>
@@ -367,9 +381,21 @@ export default function BlogDetailPage() {
           color: #374151;
         }
 
-        .prose h2 {
+        .prose h1, .prose h2, .prose h3, .prose h4 {
           color: #0a1f44;
           font-weight: bold;
+          margin-top: 1.5rem;
+          margin-bottom: 1rem;
+        }
+
+        .prose p {
+          margin-bottom: 1rem;
+          line-height: 1.8;
+        }
+
+        .prose ul, .prose ol {
+          margin-left: 1.5rem;
+          margin-bottom: 1rem;
         }
 
         .prose a {
@@ -381,7 +407,13 @@ export default function BlogDetailPage() {
           color: #db2777;
         }
 
-        /* Scrollbar */
+        .prose img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 0.5rem;
+          margin: 1.5rem 0;
+        }
+
         ::-webkit-scrollbar {
           width: 10px;
         }
@@ -397,14 +429,6 @@ export default function BlogDetailPage() {
 
         ::-webkit-scrollbar-thumb:hover {
           background: #db2777;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-          .container {
-            padding-left: 1rem;
-            padding-right: 1rem;
-          }
         }
       `}</style>
     </div>
