@@ -554,6 +554,7 @@
 // }
 
 
+
 import React, { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -584,7 +585,7 @@ export default function ContactPage() {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   useEffect(() => {
     AOS.init({
@@ -614,14 +615,12 @@ export default function ContactPage() {
       ...prev,
       [name]: value,
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
         [name]: "",
       }));
     }
-    // Clear submit status when user modifies form
     if (submitStatus) {
       setSubmitStatus(null);
     }
@@ -668,9 +667,7 @@ export default function ContactPage() {
       try {
         console.log("🚀 Submitting appointment:", formData);
 
-        // Prepare payload with multiple field name formats
         const payload = {
-          // Common formats that backends might expect
           name: formData.fullName,
           fullName: formData.fullName,
           email: formData.email,
@@ -707,10 +704,8 @@ export default function ContactPage() {
 
         console.log("✅ Appointment booked successfully:", responseData);
 
-        // Show success message
         setSubmitStatus("success");
 
-        // Reset form after 2 seconds
         setTimeout(() => {
           setFormData({
             fullName: "",
@@ -730,7 +725,6 @@ export default function ContactPage() {
       }
     } else {
       setErrors(newErrors);
-      // Scroll to first error
       const firstErrorField = Object.keys(newErrors)[0];
       const element = document.querySelector(`[name="${firstErrorField}"]`);
       if (element) {
@@ -977,13 +971,13 @@ export default function ContactPage() {
                         onChange={handleChange}
                         placeholder="Enter your full name"
                         disabled={isSubmitting}
-                        className={`w-full px-4 py-3 pl-12 border-2 rounded-lg focus:outline-none transition-colors ${
+                        className={`w-full px-4 py-3 pl-11 border-2 rounded-lg focus:outline-none transition-colors ${
                           errors.fullName
                             ? "border-red-500 focus:border-red-500"
                             : "border-gray-200 focus:border-pink-500"
                         } ${isSubmitting ? "bg-gray-100 cursor-not-allowed" : ""}`}
                       />
-                      <User className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                      <User className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                     </div>
                     {errors.fullName && (
                       <p className="text-red-500 text-sm mt-1">
@@ -1012,13 +1006,13 @@ export default function ContactPage() {
                           onChange={handleChange}
                           placeholder="your@email.com"
                           disabled={isSubmitting}
-                          className={`w-full px-4 py-3 pl-12 border-2 rounded-lg focus:outline-none transition-colors ${
+                          className={`w-full px-4 py-3 pl-11 border-2 rounded-lg focus:outline-none transition-colors ${
                             errors.email
                               ? "border-red-500 focus:border-red-500"
                               : "border-gray-200 focus:border-pink-500"
                           } ${isSubmitting ? "bg-gray-100 cursor-not-allowed" : ""}`}
                         />
-                        <Mail className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                        <Mail className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                       </div>
                       {errors.email && (
                         <p className="text-red-500 text-sm mt-1">
@@ -1040,13 +1034,13 @@ export default function ContactPage() {
                           onChange={handleChange}
                           placeholder="1234567890"
                           disabled={isSubmitting}
-                          className={`w-full px-4 py-3 pl-12 border-2 rounded-lg focus:outline-none transition-colors ${
+                          className={`w-full px-4 py-3 pl-11 border-2 rounded-lg focus:outline-none transition-colors ${
                             errors.phone
                               ? "border-red-500 focus:border-red-500"
                               : "border-gray-200 focus:border-pink-500"
                           } ${isSubmitting ? "bg-gray-100 cursor-not-allowed" : ""}`}
                         />
-                        <Phone className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                        <Phone className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                       </div>
                       {errors.phone && (
                         <p className="text-red-500 text-sm mt-1">
@@ -1076,13 +1070,13 @@ export default function ContactPage() {
                           onChange={handleChange}
                           min={new Date().toISOString().split("T")[0]}
                           disabled={isSubmitting}
-                          className={`w-full px-4 py-3 pl-12 border-2 rounded-lg focus:outline-none transition-colors ${
+                          className={`w-full px-4 py-3 pl-11 border-2 rounded-lg focus:outline-none transition-colors ${
                             errors.preferredDate
                               ? "border-red-500 focus:border-red-500"
                               : "border-gray-200 focus:border-pink-500"
                           } ${isSubmitting ? "bg-gray-100 cursor-not-allowed" : ""}`}
                         />
-                        <Calendar className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                        <Calendar className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                       </div>
                       {errors.preferredDate && (
                         <p className="text-red-500 text-sm mt-1">
@@ -1102,7 +1096,7 @@ export default function ContactPage() {
                           value={formData.preferredTime}
                           onChange={handleChange}
                           disabled={isSubmitting}
-                          className={`w-full px-4 py-3 pl-12 border-2 rounded-lg focus:outline-none transition-colors appearance-none bg-white ${
+                          className={`w-full px-4 py-3 pl-11 border-2 rounded-lg focus:outline-none transition-colors appearance-none bg-white ${
                             errors.preferredTime
                               ? "border-red-500 focus:border-red-500"
                               : "border-gray-200 focus:border-pink-500"
@@ -1115,7 +1109,7 @@ export default function ContactPage() {
                             </option>
                           ))}
                         </select>
-                        <Clock className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                        <Clock className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                       </div>
                       {errors.preferredTime && (
                         <p className="text-red-500 text-sm mt-1">
@@ -1142,11 +1136,11 @@ export default function ContactPage() {
                         placeholder="Tell us about your condition or any specific requirements..."
                         rows="5"
                         disabled={isSubmitting}
-                        className={`w-full px-4 py-3 pl-12 border-2 border-gray-200 rounded-lg focus:border-pink-500 focus:outline-none transition-colors resize-none ${
+                        className={`w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-lg focus:border-pink-500 focus:outline-none transition-colors resize-none ${
                           isSubmitting ? "bg-gray-100 cursor-not-allowed" : ""
                         }`}
                       ></textarea>
-                      <MessageSquare className="w-5 h-5 text-gray-400 absolute left-4 top-4" />
+                      <MessageSquare className="w-5 h-5 text-gray-400 absolute left-3 top-4" />
                     </div>
                   </div>
 
