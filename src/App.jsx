@@ -12,7 +12,7 @@ import ContactPage from "./pages/RoutesPage/ContactPage/ContactPage";
 import Loader from "./layout/Loader/Loader";
 import { allLocations } from "./data/Locationsdata/Locationsdata";
 import ServiceDetailPage from "./pages/DetailPage/ServiceDetailPage/ServiceDetailPage";
-import LocationDetailPage from "./pages/DetailPage/LocationDetailPage/LocationDetailPage";
+import LocationDetailPage from "./pages/DetailPage/Locationdetailpage/Locationdetailpage";
 
 const SmartServiceRoute = () => {
   const location = useLocation();
