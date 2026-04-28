@@ -7,10 +7,10 @@ export default function HeroSection() {
 
   const slides = [
     {
-      subtitle: "PHYSIOTHERAPY & CHIROPARCTOR CLINIC",
+      subtitle: "PHYSIOTHERAPY & CHIROPRACTIC CLINIC",
       title: "Best Chiropractic Clinic For Relax",
       description:
-        "Chiropractic care is the practice of to of physical ailments, including muscle strain back pain, and more.",
+        "Chiropractic care is the practice of treating physical ailments, including muscle strain, back pain, and more.",
       image:
         "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=800&h=800&fit=crop",
     },
@@ -32,45 +32,40 @@ export default function HeroSection() {
     },
   ];
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <div className="relative bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+    <div className="relative bg-white overflow-hidden border-b border-gray-100">
       {/* Hero Content */}
       <div className="max-w-7xl mx-auto px-4 py-20 md:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-6 lg:space-y-8">
-            {/* Subtitle with Line */}
+            {/* Subtitle */}
             <div className="flex items-center gap-4">
-              <div className="w-16 h-0.5 bg-blue-500"></div>
-              <span className="text-blue-500  text-sm md:text-base tracking-wide">
+              <div className="w-16 h-0.5 bg-black"></div>
+              <span className="text-black text-xs tracking-widest uppercase font-semibold">
                 {slides[currentSlide].subtitle}
               </span>
             </div>
 
-            {/* Main Title */}
+            {/* Title */}
             <h1
               style={{ fontFamily: "Lexend Peta, sans-serif" }}
-              className="text-4xl md:text-5xl lg:text-6xl  text-[#0a1f44] leading-tight"
+              className="text-4xl md:text-5xl lg:text-6xl text-black leading-tight"
             >
               {slides[currentSlide].title}
             </h1>
 
             {/* Description */}
-            <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-xl">
+            <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-xl">
               {slides[currentSlide].description}
             </p>
 
-            {/* CTA Button */}
-            <Link to="/contact">
-              <button className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            {/* CTA */}
+            <Link to="/contacts">
+              <button className="bg-black hover:bg-gray-800 text-white px-8 py-4 text-xs tracking-widest uppercase font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
                 GET APPOINTMENT
               </button>
             </Link>
@@ -82,33 +77,32 @@ export default function HeroSection() {
               <img
                 src={slides[currentSlide].image}
                 alt="Chiropractic Care"
-                className="w-full h-[500px] md:h-[600px] object-cover mt-3 transition-opacity duration-500"
+                className="w-full h-[500px] md:h-[600px] object-cover transition-opacity duration-500"
               />
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
             </div>
-
-            {/* Decorative Circle */}
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-pink-500/10 rounded-full blur-3xl"></div>
+            {/* Decorative */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-gray-200 rounded-full blur-3xl opacity-60"></div>
+            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-gray-300 rounded-full blur-3xl opacity-40"></div>
           </div>
         </div>
       </div>
 
+      {/* Arrow Controls */}
       <div className="absolute right-4 md:right-8 top-1/2 transform -translate-y-1/2 flex flex-col gap-4 z-10">
         <button
           onClick={prevSlide}
-          className="bg-gray-700 hover:bg-gray-800 text-white p-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+          className="bg-black hover:bg-gray-700 text-white p-3 transition-all duration-300 shadow-lg"
           aria-label="Previous slide"
         >
-          <ChevronLeft size={24} />
+          <ChevronLeft size={22} />
         </button>
         <button
           onClick={nextSlide}
-          className="bg-gray-700 hover:bg-gray-800 text-white p-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+          className="bg-black hover:bg-gray-700 text-white p-3 transition-all duration-300 shadow-lg"
           aria-label="Next slide"
         >
-          <ChevronRight size={24} />
+          <ChevronRight size={22} />
         </button>
       </div>
 
@@ -118,21 +112,15 @@ export default function HeroSection() {
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`transition-all duration-300 ${
+            className={`transition-all duration-300 rounded-full ${
               index === currentSlide
-                ? "w-12 h-3 bg-pink-500"
-                : "w-3 h-3 bg-gray-400 hover:bg-gray-500"
-            } rounded-full`}
+                ? "w-12 h-3 bg-black"
+                : "w-3 h-3 bg-gray-300 hover:bg-gray-500"
+            }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
-
-      {/* Background Pattern */}
-      {/* <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute top-20 left-20 w-64 h-64 border-2 border-blue-500 rounded-full"></div>
-        <div className="absolute bottom-20 right-20 w-48 h-48 border-2 border-pink-500 rounded-full"></div>
-      </div> */}
     </div>
   );
 }
