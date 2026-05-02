@@ -45,7 +45,7 @@ export const delhiLocations = [
       {
         question: "How do I book an appointment in Panchsheel Park?",
         answer:
-          "Call 1800-456-7890 or email info@example.com to book your physiotherapy appointment in Panchsheel Park.",
+          "Call 1800-456-7890 or email reception.physiocentric@gmail.com to book your physiotherapy appointment in Panchsheel Park.",
       },
     ],
   },

@@ -13,6 +13,7 @@ import Loader from "./layout/Loader/Loader";
 import { allLocations } from "./data/Locationsdata/Locationsdata";
 import ServiceDetailPage from "./pages/DetailPage/ServiceDetailPage/ServiceDetailPage";
 import LocationDetailPage from "./pages/DetailPage/Locationdetailpage/Locationdetailpage";
+import DoctorsPage from "./pages/DoctorsPage/DoctorsPage";
 
 const SmartServiceRoute = () => {
   const location = useLocation();
@@ -46,6 +47,7 @@ const App = () => {
         <Route path="/blogs/:slug" element={<BlogDetailPage />} />
         <Route path="/contacts" element={<ContactPage />} />
         <Route path="/service/:slug" element={<SmartServiceRoute />} />
+         <Route path="/our-doctor" element={<DoctorsPage />} />
       </Routes>
     </MainLayout>
   );

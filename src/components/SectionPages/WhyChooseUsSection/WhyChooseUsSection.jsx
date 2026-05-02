@@ -1,9 +1,10 @@
 import React from 'react';
+import whyChooseImage from '../../../assets/image01.png'; // apna actual path yahan daalo
 
 export default function WhyChooseUsSection() {
   const stats = [
-    { number: "25k", label: "Happy Customers" },
-    { number: "12+", label: "Years Experience" },
+    { number: "37+", label: "Happy Patients" },
+    { number: "5.0", label: "Google Rating" },
     { number: "100%", label: "Satisfaction" },
   ];
 
@@ -13,11 +14,10 @@ export default function WhyChooseUsSection() {
         {/* Left Image */}
         <div className="relative h-[300px] lg:h-auto">
           <img
-            src="https://i.pinimg.com/736x/b7/3c/d9/b73cd905928cd9dba0376bc906a85098.jpg"
-            alt="Chiropractic Treatment"
+            src={whyChooseImage}
+            alt="PhysioCentric Physiotherapy Treatment"
             className="w-full h-full object-cover"
           />
-          {/* Subtle dark overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20"></div>
         </div>
 
@@ -37,17 +37,19 @@ export default function WhyChooseUsSection() {
               style={{ fontFamily: "Lexend Peta, sans-serif" }}
               className="text-3xl md:text-4xl lg:text-5xl text-white leading-tight"
             >
-              Why Choose Us
+              Why Choose PhysioCentric?
             </h2>
 
             {/* Description */}
             <div className="space-y-5">
               <p className="text-gray-300 text-lg leading-relaxed">
-                We proudly deliver quality, thorough chiropractic care to the community and surrounding areas.
+                PhysioCentric is New Delhi's top-rated physiotherapy center, trusted by hundreds
+                of patients in Gulmohar Park and across the city for expert, evidence-based care.
               </p>
               <p className="text-gray-400 text-base leading-relaxed">
-                Chiropractic care uses spinal alignment to relieve a wide variety of physical ailments,
-                including muscle strain, neck pain, chronic back pain, and more.
+                Our qualified physiotherapists treat back pain, joint pain, sports injuries,
+                post-surgical rehab, neurological conditions, and more — with personalized
+                treatment plans designed around your recovery goals.
               </p>
             </div>
 

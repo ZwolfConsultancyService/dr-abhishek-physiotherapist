@@ -371,8 +371,8 @@ const LocationDetailPage = () => {
                     </div>
                     <div>
                       <p className="text-xs text-gray-400 tracking-widest uppercase">Email</p>
-                      <a href="mailto:info@example.com" className="text-black font-medium text-sm hover:underline">
-                        info@example.com
+                      <a href="mailto:reception.physiocentric@gmail.com" className="text-black font-medium text-sm hover:underline">
+                        reception.physiocentric@gmail.com
                       </a>
                     </div>
                   </div>

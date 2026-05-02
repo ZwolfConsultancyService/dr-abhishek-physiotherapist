@@ -1,25 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, ChevronUp } from "lucide-react";
-import logo from "../../assets/Logo.png"; // apna path adjust karo
+import { Phone, Mail, MapPin, Clock, ChevronUp } from "lucide-react";
+import logo from "../../assets/Logo.png";
 
 export default function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const quickLinks = [
-    { name: "Home", path: "/" },
-    { name: "About Us", path: "/about-us" },
-    { name: "Services", path: "/services" },
-    { name: "Blog", path: "/blogs" },
-    { name: "Contact", path: "/contacts" },
+    { name: "Home",       path: "/" },
+    { name: "About Us",   path: "/about-us" },
+    { name: "Services",   path: "/services" },
+    { name: "Blog",       path: "/blogs" },
+    { name: "Contact",    path: "/contacts" },
   ];
 
   const symptoms = [
-    { name: "Laser Therapy", path: "/service/laser-therapy" },
-    { name: "Massage Therapy", path: "/service/massage-therapy" },
-    { name: "Physio Therapy", path: "/service/physio-therapy" },
-    { name: "Physiotherapy", path: "/service/physiotherapy" },
-    { name: "Sport Injury", path: "/service/sport-injury" },
+    { name: "Laser Therapy",    path: "/service/laser-therapy" },
+    { name: "Massage Therapy",  path: "/service/massage-therapy" },
+    { name: "Physio Therapy",   path: "/service/physio-therapy" },
+    { name: "Physiotherapy",    path: "/service/physiotherapy" },
+    { name: "Sport Injury",     path: "/service/sport-injury" },
   ];
 
   return (
@@ -36,6 +36,7 @@ export default function Footer() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+
           {/* Brand */}
           <div className="space-y-6">
             <Link to="/" className="flex items-center gap-3">
@@ -45,9 +46,7 @@ export default function Footer() {
                 className="w-12 h-12 object-contain brightness-0 invert"
               />
               <div>
-                <div className="text-xl font-bold tracking-tight">
-                  Chirokind
-                </div>
+                <div className="text-xl font-bold tracking-tight">Chirokind</div>
                 <div className="text-xs text-gray-400 tracking-widest uppercase">
                   Chiropractic Clinic
                 </div>
@@ -56,7 +55,6 @@ export default function Footer() {
             <p className="text-gray-400 text-sm leading-relaxed">
               We address the cause of your pain, not just the symptom.
             </p>
-            {/* Decorative line */}
             <div className="w-12 h-0.5 bg-white opacity-20"></div>
           </div>
 
@@ -109,32 +107,51 @@ export default function Footer() {
               <span className="absolute -bottom-3 left-0 w-8 h-0.5 bg-white"></span>
             </h3>
             <div className="space-y-4">
+
+              {/* Phone */}
               <a
-                href="tel:123-456-74700"
+                href="tel:09810513841"
                 className="flex items-start gap-3 text-gray-400 hover:text-white transition-colors duration-300 group"
               >
                 <div className="w-8 h-8 border border-gray-700 flex items-center justify-center flex-shrink-0 group-hover:border-white transition-colors">
                   <Phone size={14} />
                 </div>
-                <span className="text-sm pt-1">(123)-456-74700</span>
+                <span className="text-sm pt-1">098105 13841</span>
               </a>
+
+              {/* Email */}
               <a
-                href="mailto:info@example.com"
+                href="mailto:reception.physiocentric@gmail.com"
                 className="flex items-start gap-3 text-gray-400 hover:text-white transition-colors duration-300 group"
               >
                 <div className="w-8 h-8 border border-gray-700 flex items-center justify-center flex-shrink-0 group-hover:border-white transition-colors">
                   <Mail size={14} />
                 </div>
-                <span className="text-sm pt-1">info@example.com</span>
+                <span className="text-sm pt-1">reception.physiocentric@gmail.com</span>
               </a>
+
+              {/* Address */}
               <div className="flex items-start gap-3 text-gray-400">
                 <div className="w-8 h-8 border border-gray-700 flex items-center justify-center flex-shrink-0">
                   <MapPin size={14} />
                 </div>
-                <span className="text-sm pt-1">
-                  121 Lato Street, Melbourne, POC 3000
+                <span className="text-sm pt-1 leading-relaxed">
+                  A-2, Block A, Gulmohar Park,<br />
+                  New Delhi, Delhi 110049
                 </span>
               </div>
+
+              {/* Hours */}
+              <div className="flex items-start gap-3 text-gray-400">
+                <div className="w-8 h-8 border border-gray-700 flex items-center justify-center flex-shrink-0">
+                  <Clock size={14} />
+                </div>
+                <div className="text-sm pt-1 leading-relaxed">
+                  <p>Mon–Sat: 10am – 7pm</p>
+                  <p className="text-gray-600">Sun: Closed</p>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>

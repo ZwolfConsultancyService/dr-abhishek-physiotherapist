@@ -1,329 +1,373 @@
-import React, { useState, useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import {
-  Phone, Mail, MapPin, Clock, Calendar,
-  User, MessageSquare, Send, CheckCircle, AlertCircle,
-} from "lucide-react";
+import React, { useState } from "react";
 
 const API_BASE_URL = "https://dr-abhishek-physiotherapist-backend.onrender.com/api";
 
+const timeSlots = ["09:00 AM","10:00 AM","11:00 AM","12:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM"];
+
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    fullName: "", email: "", phone: "",
-    preferredDate: "", preferredTime: "", message: "",
-  });
+  const [formData, setFormData] = useState({ fullName:"", email:"", phone:"", preferredDate:"", preferredTime:"", message:"" });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
-  useEffect(() => {
-    AOS.init({ duration: 1200, once: true, easing: "ease-in-out-cubic", offset: 100, delay: 100 });
-    AOS.refresh();
-  }, []);
-
-  const timeSlots = ["09:00 AM","10:00 AM","11:00 AM","12:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM"];
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+    setFormData(p => ({ ...p, [name]: value }));
+    if (errors[name]) setErrors(p => ({ ...p, [name]: "" }));
     if (submitStatus) setSubmitStatus(null);
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Email is invalid";
-    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
-    else if (!/^\d{10}$/.test(formData.phone.replace(/[-\s]/g, ""))) newErrors.phone = "Phone must be 10 digits";
-    if (!formData.preferredDate) newErrors.preferredDate = "Preferred date is required";
-    if (!formData.preferredTime) newErrors.preferredTime = "Preferred time is required";
-    return newErrors;
+  const validate = () => {
+    const e = {};
+    if (!formData.fullName.trim()) e.fullName = "Full name is required";
+    if (!formData.email.trim()) e.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) e.email = "Invalid email";
+    if (!formData.phone.trim()) e.phone = "Phone is required";
+    else if (!/^\d{10}$/.test(formData.phone.replace(/[-\s]/g,""))) e.phone = "Must be 10 digits";
+    if (!formData.preferredDate) e.preferredDate = "Date is required";
+    if (!formData.preferredTime) e.preferredTime = "Time is required";
+    return e;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newErrors = validateForm();
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+    const errs = validate();
+    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setIsSubmitting(true);
-    setSubmitStatus(null);
     try {
-      const payload = {
-        name: formData.fullName, fullName: formData.fullName,
-        email: formData.email, phone: formData.phone, phoneNumber: formData.phone,
-        date: formData.preferredDate, preferredDate: formData.preferredDate,
-        time: formData.preferredTime, preferredTime: formData.preferredTime,
-        message: formData.message || "", notes: formData.message || "",
-      };
-      const response = await fetch(`${API_BASE_URL}/appointment`, {
+      const res = await fetch(`${API_BASE_URL}/appointment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          name: formData.fullName, fullName: formData.fullName,
+          email: formData.email, phone: formData.phone, phoneNumber: formData.phone,
+          date: formData.preferredDate, preferredDate: formData.preferredDate,
+          time: formData.preferredTime, preferredTime: formData.preferredTime,
+          message: formData.message, notes: formData.message,
+        }),
       });
-      const responseData = await response.json();
-      if (!response.ok) throw new Error(responseData.message || "Failed to book");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
       setSubmitStatus("success");
       setTimeout(() => {
-        setFormData({ fullName: "", email: "", phone: "", preferredDate: "", preferredTime: "", message: "" });
+        setFormData({ fullName:"", email:"", phone:"", preferredDate:"", preferredTime:"", message:"" });
         setSubmitStatus(null);
-      }, 3000);
-    } catch (error) {
+      }, 4000);
+    } catch {
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const inputClass = (field) =>
-    `w-full px-4 py-3 pl-11 border-2 focus:outline-none transition-colors ${
-      errors[field] ? "border-red-500" : "border-gray-200 focus:border-black"
-    } ${isSubmitting ? "bg-gray-100 cursor-not-allowed" : ""}`;
-
-  const contactItems = [
-    { icon: <Phone className="w-5 h-5 text-white" />, label: "Phone", lines: ["1800-456-7890", "+91 98765 43210"] },
-    { icon: <Mail className="w-5 h-5 text-white" />, label: "Email", lines: ["info@physio.com", "support@physio.com"] },
-    { icon: <MapPin className="w-5 h-5 text-white" />, label: "Address", lines: ["123 Medical Center,", "Healthcare Plaza,", "New Delhi, 110001"] },
-    { icon: <Clock className="w-5 h-5 text-white" />, label: "Working Hours", lines: ["Mon - Fri: 9:00 AM - 6:00 PM", "Sat: 9:00 AM - 2:00 PM", "Sun: Closed"] },
-  ];
+  const baseInputStyle = (field) => ({
+    width: "100%",
+    padding: "11px 14px 11px 40px",
+    border: `1.5px solid ${errors[field] ? "#ef4444" : "#e2e8f0"}`,
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontFamily: "inherit",
+    color: "#1e293b",
+    background: isSubmitting ? "#f8fafc" : "#fff",
+    outline: "none",
+    boxSizing: "border-box",
+    transition: "border-color 0.2s",
+  });
 
   return (
-    <div className="min-h-screen bg-gray-50 mt-12">
-      {/* Hero Banner */}
-      <div
-        className="relative h-[300px] bg-cover bg-center"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&h=800&fit=crop')" }}
-        data-aos="fade-down" data-aos-duration="1000"
-      >
-        <div className="absolute inset-0 bg-black/70"></div>
-        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center max-w-7xl">
-          <h1 className="text-4xl md:text-5xl mt-10 text-white mb-4 font-bold"
-            data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
-            Contact Us
+    <div style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif", background: "#f8fafc", minHeight: "100vh" }}>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet" />
+
+      {/* HERO */}
+      <div style={{ position: "relative", height: "320px", background: "#0d1117", overflow: "hidden" }}>
+        <img
+          src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&h=640&fit=crop"
+          alt=""
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.25 }}
+        />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,rgba(13,17,23,0.9) 0%,rgba(15,23,42,0.75) 100%)" }} />
+        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "3px", background: "linear-gradient(180deg,transparent,#3b82f6,transparent)" }} />
+        <div style={{ position: "relative", zIndex: 2, maxWidth: "1200px", margin: "0 auto", padding: "0 24px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end", paddingBottom: "48px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
+            <div style={{ width: "40px", height: "1px", background: "#60a5fa" }} />
+            <span style={{ fontSize: "11px", letterSpacing: "4px", textTransform: "uppercase", color: "#93c5fd", fontWeight: 500 }}>PhysioCentric</span>
+          </div>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 600, color: "#fff", margin: 0, lineHeight: 1.08 }}>
+            Get in <em style={{ color: "#93c5fd" }}>Touch</em>
           </h1>
-          <nav className="flex items-center gap-2 text-white/70 text-sm"
-            data-aos="fade-up" data-aos-duration="1200" data-aos-delay="300">
-            <button className="hover:text-white transition-colors">Home</button>
-            <span>/</span>
-            <span className="text-white">Contact Us</span>
-          </nav>
+          <div style={{ marginTop: "16px", display: "flex", gap: "8px", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
+            <span>Home</span><span>›</span><span style={{ color: "rgba(255,255,255,0.75)" }}>Contact Us</span>
+          </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Left - Contact Info */}
-            <aside className="lg:col-span-4">
-              <div className="space-y-6">
-                <div className="bg-white shadow-lg p-8"
-                  data-aos="fade-right" data-aos-duration="1200" data-aos-delay="100">
-                  <h3 className="text-2xl font-bold text-black mb-6 pb-3 border-b border-gray-100">
-                    Contact Information
-                  </h3>
-                  <div className="space-y-6">
-                    {contactItems.map((item, i) => (
-                      <div key={i} className="flex items-start gap-4"
-                        data-aos="fade-up" data-aos-duration="1000" data-aos-delay={200 + i * 100}>
-                        <div className="w-10 h-10 bg-black flex items-center justify-center flex-shrink-0">
-                          {item.icon}
-                        </div>
-                        <div>
-                          <h4 className="text-black font-semibold mb-1 text-sm tracking-widest uppercase">
-                            {item.label}
-                          </h4>
-                          {item.lines.map((line, j) => (
-                            <p key={j} className="text-gray-500 text-sm">{line}</p>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Map */}
-                <div className="bg-white shadow-lg overflow-hidden"
-                  data-aos="fade-right" data-aos-duration="1200" data-aos-delay="200">
-                  <div className="h-64 bg-gray-200">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224357.49842267563!2d77.06889754725782!3d28.52725254683551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1234567890"
-                      width="100%" height="100%" style={{ border: 0 }}
-                      allowFullScreen loading="lazy" title="Location Map"
-                    ></iframe>
-                  </div>
-                </div>
+      {/* INFO CARDS */}
+      <div style={{ background: "#fff", borderBottom: "1px solid #e2e8f0" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))" }}>
+          {[
+            { color: "#2563eb", bg: "#eff6ff", icon: "phone", label: "Call Us", lines: ["09810513841"] },
+            { color: "#059669", bg: "#ecfdf5", icon: "mail", label: "Email", lines: ["info@physiocentric.com"] },
+            { color: "#7c3aed", bg: "#f5f3ff", icon: "pin", label: "Location", lines: ["A-2, Block A, Gulmohar Park,", "New Delhi, Delhi 110049"] },
+            { color: "#d97706", bg: "#fffbeb", icon: "clock", label: "Hours", lines: ["Mon–Sat: 10am – 7pm", "Sun: Closed"] },
+          ].map((c, i) => (
+            <div key={i} style={{ padding: "24px 20px", borderRight: "1px solid #f1f5f9", borderTop: `3px solid ${c.color}` }}>
+              <div style={{ width: "38px", height: "38px", borderRadius: "10px", background: c.bg, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "12px" }}>
+                <IconSvg name={c.icon} color={c.color} />
               </div>
-            </aside>
+              <div style={{ fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: "#94a3b8", fontWeight: 600, marginBottom: "5px" }}>{c.label}</div>
+              {c.lines.map((l, j) => <div key={j} style={{ fontSize: "13px", color: "#334155", lineHeight: 1.7 }}>{l}</div>)}
+            </div>
+          ))}
+        </div>
+      </div>
 
-            {/* Right - Form */}
-            <main className="lg:col-span-8">
-              <div className="bg-white shadow-lg p-8 md:p-12"
-                data-aos="fade-left" data-aos-duration="1200" data-aos-delay="100">
-                <div className="mb-8">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-0.5 bg-black"></div>
-                    <span className="text-xs tracking-widest uppercase font-semibold text-black">Schedule a Visit</span>
+      {/* MAIN GRID */}
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "48px 24px 80px" }}>
+        <div className="cp-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: "40px" }}>
+
+          {/* LEFT */}
+          <div>
+            <div style={{ marginBottom: "24px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
+                <div style={{ width: "28px", height: "1px", background: "#3b82f6" }} />
+                <span style={{ fontSize: "10px", letterSpacing: "3.5px", textTransform: "uppercase", color: "#3b82f6", fontWeight: 600 }}>Find Us</span>
+              </div>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.4rem,3vw,1.9rem)", fontWeight: 600, color: "#0f172a", margin: "0 0 10px" }}>
+                Visit Our <em>Clinic</em>
+              </h2>
+              <p style={{ fontSize: "14px", color: "#64748b", lineHeight: 1.7, margin: 0 }}>
+                Located in Gulmohar Park, New Delhi. Walk-ins welcome during working hours.
+              </p>
+            </div>
+
+            {/* MAP */}
+            <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #e2e8f0", boxShadow: "0 4px 20px rgba(0,0,0,0.06)" }}>
+              <div style={{ height: "3px", background: "linear-gradient(90deg,#3b82f6,#7c3aed)" }} />
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d17279.444892527215!2d77.19908151661608!3d28.546738155120085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3c2bae79c4b%3A0x8c6cf571e1cd86ce!2sPhysioCentric!5e0!3m2!1sen!2sin!4v1777618165437!5m2!1sen!2sin"
+                width="100%" height="280"
+                style={{ border: 0, display: "block", width: "100%" }}
+                allowFullScreen loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="PhysioCentric Map"
+              />
+              <div style={{ padding: "13px 16px", display: "flex", alignItems: "center", gap: "8px", background: "#fff", borderTop: "1px solid #f1f5f9" }}>
+                <IconSvg name="pin" color="#7c3aed" size={14} />
+                <span style={{ fontSize: "12px", color: "#475569" }}>A-2, Block A, Gulmohar Park, New Delhi 110049</span>
+              </div>
+            </div>
+
+            {/* CALL CTA */}
+            <a href="tel:09810513841"
+              style={{ display: "flex", alignItems: "center", gap: "16px", marginTop: "16px", padding: "18px 22px", borderRadius: "12px", background: "#0f172a", color: "#fff", textDecoration: "none", transition: "background 0.2s" }}
+              onMouseEnter={e => e.currentTarget.style.background = "#1d4ed8"}
+              onMouseLeave={e => e.currentTarget.style.background = "#0f172a"}
+            >
+              <div style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <IconSvg name="phone" color="white" size={17} />
+              </div>
+              <div>
+                <div style={{ fontSize: "10px", letterSpacing: "3px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "3px" }}>Call Direct</div>
+                <div style={{ fontSize: "17px", fontWeight: 600 }}>09810513841</div>
+              </div>
+              <div style={{ marginLeft: "auto", fontSize: "20px", opacity: 0.3 }}>›</div>
+            </a>
+          </div>
+
+          {/* RIGHT — FORM */}
+          <div style={{ background: "#fff", borderRadius: "16px", border: "1px solid #e2e8f0", boxShadow: "0 4px 32px rgba(0,0,0,0.06)", overflow: "hidden" }}>
+            <div style={{ height: "4px", background: "linear-gradient(90deg,#3b82f6,#7c3aed,#06b6d4)" }} />
+            <div style={{ padding: "36px 32px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
+                <div style={{ width: "28px", height: "1px", background: "#3b82f6" }} />
+                <span style={{ fontSize: "10px", letterSpacing: "3.5px", textTransform: "uppercase", color: "#3b82f6", fontWeight: 600 }}>Schedule a Visit</span>
+              </div>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.4rem,3vw,1.9rem)", fontWeight: 600, color: "#0f172a", margin: "0 0 6px" }}>
+                Book an <em>Appointment</em>
+              </h2>
+              <p style={{ fontSize: "14px", color: "#94a3b8", margin: "0 0 28px" }}>Fill in your details — we'll confirm within 24 hours.</p>
+
+              {submitStatus === "success" && (
+                <div style={{ display: "flex", gap: "12px", padding: "13px 15px", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "8px", marginBottom: "20px" }}>
+                  <span style={{ color: "#16a34a", fontWeight: 700 }}>✓</span>
+                  <div>
+                    <div style={{ fontWeight: 600, color: "#15803d", fontSize: "14px" }}>Appointment Booked!</div>
+                    <div style={{ fontSize: "13px", color: "#16a34a" }}>We'll confirm within 24 hours.</div>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-black mb-3"
-                    data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-                    Book an Appointment
-                  </h2>
-                  <p className="text-gray-500" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
-                    Schedule your visit and we'll confirm within 24 hours
-                  </p>
+                </div>
+              )}
+              {submitStatus === "error" && (
+                <div style={{ display: "flex", gap: "12px", padding: "13px 15px", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "8px", marginBottom: "20px" }}>
+                  <span style={{ color: "#dc2626", fontWeight: 700 }}>!</span>
+                  <div>
+                    <div style={{ fontWeight: 600, color: "#991b1b", fontSize: "14px" }}>Booking Failed</div>
+                    <div style={{ fontSize: "13px", color: "#dc2626" }}>Please try again or call us directly.</div>
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit}>
+                {/* Full Name */}
+                <FField label="Full Name" required error={errors.fullName}>
+                  <IWrap icon="user">
+                    <input type="text" name="fullName" value={formData.fullName} onChange={handleChange}
+                      placeholder="Your full name" disabled={isSubmitting}
+                      style={baseInputStyle("fullName")}
+                      onFocus={e => e.target.style.borderColor = "#3b82f6"}
+                      onBlur={e => e.target.style.borderColor = errors.fullName ? "#ef4444" : "#e2e8f0"}
+                    />
+                  </IWrap>
+                </FField>
+
+                <div className="cp-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+                  <FField label="Email" required error={errors.email}>
+                    <IWrap icon="mail">
+                      <input type="email" name="email" value={formData.email} onChange={handleChange}
+                        placeholder="your@email.com" disabled={isSubmitting}
+                        style={baseInputStyle("email")}
+                        onFocus={e => e.target.style.borderColor = "#3b82f6"}
+                        onBlur={e => e.target.style.borderColor = errors.email ? "#ef4444" : "#e2e8f0"}
+                      />
+                    </IWrap>
+                  </FField>
+                  <FField label="Phone" required error={errors.phone}>
+                    <IWrap icon="phone">
+                      <input type="tel" name="phone" value={formData.phone} onChange={handleChange}
+                        placeholder="10-digit number" disabled={isSubmitting}
+                        style={baseInputStyle("phone")}
+                        onFocus={e => e.target.style.borderColor = "#3b82f6"}
+                        onBlur={e => e.target.style.borderColor = errors.phone ? "#ef4444" : "#e2e8f0"}
+                      />
+                    </IWrap>
+                  </FField>
                 </div>
 
-                {/* Success */}
-                {submitStatus === "success" && (
-                  <div className="mb-6 p-4 bg-gray-50 border-l-4 border-black flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-black flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="text-black font-bold mb-1">Appointment Booked!</h4>
-                      <p className="text-gray-600 text-sm">We'll confirm within 24 hours.</p>
-                    </div>
+                <div className="cp-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+                  <FField label="Preferred Date" required error={errors.preferredDate}>
+                    <IWrap icon="cal">
+                      <input type="date" name="preferredDate" value={formData.preferredDate} onChange={handleChange}
+                        min={new Date().toISOString().split("T")[0]} disabled={isSubmitting}
+                        style={{ ...baseInputStyle("preferredDate"), colorScheme: "light" }}
+                        onFocus={e => e.target.style.borderColor = "#3b82f6"}
+                        onBlur={e => e.target.style.borderColor = errors.preferredDate ? "#ef4444" : "#e2e8f0"}
+                      />
+                    </IWrap>
+                  </FField>
+                  <FField label="Preferred Time" required error={errors.preferredTime}>
+                    <IWrap icon="clock" arrow>
+                      <select name="preferredTime" value={formData.preferredTime} onChange={handleChange}
+                        disabled={isSubmitting}
+                        style={{ ...baseInputStyle("preferredTime"), appearance: "none", cursor: "pointer" }}
+                        onFocus={e => e.target.style.borderColor = "#3b82f6"}
+                        onBlur={e => e.target.style.borderColor = errors.preferredTime ? "#ef4444" : "#e2e8f0"}
+                      >
+                        <option value="">Select time</option>
+                        {timeSlots.map((s, i) => <option key={i}>{s}</option>)}
+                      </select>
+                    </IWrap>
+                  </FField>
+                </div>
+
+                <FField label="Message (Optional)">
+                  <div style={{ position: "relative" }}>
+                    <IconSvg name="msg" color="#94a3b8" size={15} style={{ position: "absolute", left: "13px", top: "13px", pointerEvents: "none" }} />
+                    <textarea name="message" value={formData.message} onChange={handleChange}
+                      placeholder="Describe your condition or symptoms..." rows={4} disabled={isSubmitting}
+                      style={{ width: "100%", padding: "11px 14px 11px 40px", border: "1.5px solid #e2e8f0", borderRadius: "8px", fontSize: "14px", fontFamily: "inherit", color: "#1e293b", resize: "none", outline: "none", background: isSubmitting ? "#f8fafc" : "#fff", boxSizing: "border-box", lineHeight: 1.6, transition: "border-color 0.2s" }}
+                      onFocus={e => e.target.style.borderColor = "#3b82f6"}
+                      onBlur={e => e.target.style.borderColor = "#e2e8f0"}
+                    />
                   </div>
-                )}
+                </FField>
 
-                {/* Error */}
-                {submitStatus === "error" && (
-                  <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 flex items-start gap-3">
-                    <AlertCircle className="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="text-red-800 font-bold mb-1">Booking Failed</h4>
-                      <p className="text-red-700 text-sm">Please try again or contact us directly.</p>
-                    </div>
-                  </div>
-                )}
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Full Name */}
-                  <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-                    <label className="block text-black font-medium mb-2 text-sm tracking-wide">
-                      Full Name <span className="text-gray-400">*</span>
-                    </label>
-                    <div className="relative">
-                      <input type="text" name="fullName" value={formData.fullName}
-                        onChange={handleChange} placeholder="Enter your full name"
-                        disabled={isSubmitting} className={inputClass("fullName")} />
-                      <User className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                    </div>
-                    {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
-                  </div>
-
-                  {/* Email & Phone */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6"
-                    data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">
-                    <div>
-                      <label className="block text-black font-medium mb-2 text-sm tracking-wide">
-                        Email Address <span className="text-gray-400">*</span>
-                      </label>
-                      <div className="relative">
-                        <input type="email" name="email" value={formData.email}
-                          onChange={handleChange} placeholder="your@email.com"
-                          disabled={isSubmitting} className={inputClass("email")} />
-                        <Mail className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                      </div>
-                      {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-                    </div>
-                    <div>
-                      <label className="block text-black font-medium mb-2 text-sm tracking-wide">
-                        Phone Number <span className="text-gray-400">*</span>
-                      </label>
-                      <div className="relative">
-                        <input type="tel" name="phone" value={formData.phone}
-                          onChange={handleChange} placeholder="1234567890"
-                          disabled={isSubmitting} className={inputClass("phone")} />
-                        <Phone className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                      </div>
-                      {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
-                    </div>
-                  </div>
-
-                  {/* Date & Time */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6"
-                    data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
-                    <div>
-                      <label className="block text-black font-medium mb-2 text-sm tracking-wide">
-                        Preferred Date <span className="text-gray-400">*</span>
-                      </label>
-                      <div className="relative">
-                        <input type="date" name="preferredDate" value={formData.preferredDate}
-                          onChange={handleChange} min={new Date().toISOString().split("T")[0]}
-                          disabled={isSubmitting} className={inputClass("preferredDate")} />
-                        <Calendar className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                      </div>
-                      {errors.preferredDate && <p className="text-red-500 text-sm mt-1">{errors.preferredDate}</p>}
-                    </div>
-                    <div>
-                      <label className="block text-black font-medium mb-2 text-sm tracking-wide">
-                        Preferred Time <span className="text-gray-400">*</span>
-                      </label>
-                      <div className="relative">
-                        <select name="preferredTime" value={formData.preferredTime}
-                          onChange={handleChange} disabled={isSubmitting}
-                          className={`${inputClass("preferredTime")} appearance-none bg-white`}>
-                          <option value="">Select a time slot</option>
-                          {timeSlots.map((slot, i) => <option key={i} value={slot}>{slot}</option>)}
-                        </select>
-                        <Clock className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                      </div>
-                      {errors.preferredTime && <p className="text-red-500 text-sm mt-1">{errors.preferredTime}</p>}
-                    </div>
-                  </div>
-
-                  {/* Message */}
-                  <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="700">
-                    <label className="block text-black font-medium mb-2 text-sm tracking-wide">
-                      Message (Optional)
-                    </label>
-                    <div className="relative">
-                      <textarea name="message" value={formData.message} onChange={handleChange}
-                        placeholder="Tell us about your condition..." rows="5" disabled={isSubmitting}
-                        className={`w-full px-4 py-3 pl-11 border-2 border-gray-200 focus:border-black focus:outline-none transition-colors resize-none ${isSubmitting ? "bg-gray-100 cursor-not-allowed" : ""}`}>
-                      </textarea>
-                      <MessageSquare className="w-5 h-5 text-gray-400 absolute left-3 top-4" />
-                    </div>
-                  </div>
-
-                  {/* Submit */}
-                  <button type="submit" disabled={isSubmitting}
-                    className={`w-full py-4 px-8 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg text-sm tracking-widest uppercase font-semibold ${
-                      isSubmitting ? "bg-gray-400 cursor-not-allowed text-white" : "bg-black hover:bg-gray-800 text-white hover:-translate-y-1 hover:shadow-xl"
-                    }`}
-                    data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="800">
-                    {isSubmitting ? (
-                      <><div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>Booking...</>
-                    ) : (
-                      <><Send className="w-5 h-5" />Book Appointment</>
-                    )}
-                  </button>
-
-                  <p className="text-center text-gray-400 text-xs tracking-wide"
-                    data-aos="fade-up" data-aos-duration="1000" data-aos-delay="900">
-                    By submitting this form, you agree to our terms and conditions
-                  </p>
-                </form>
-              </div>
-            </main>
+                <button type="submit" disabled={isSubmitting}
+                  style={{ width: "100%", padding: "14px 20px", marginTop: "4px", background: isSubmitting ? "#94a3b8" : "#0f172a", color: "#fff", border: "none", borderRadius: "10px", cursor: isSubmitting ? "not-allowed" : "pointer", fontFamily: "inherit", fontSize: "12px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", transition: "all 0.2s" }}
+                  onMouseEnter={e => { if (!isSubmitting) { e.currentTarget.style.background = "#1d4ed8"; e.currentTarget.style.transform = "translateY(-1px)"; } }}
+                  onMouseLeave={e => { e.currentTarget.style.background = isSubmitting ? "#94a3b8" : "#0f172a"; e.currentTarget.style.transform = "none"; }}
+                >
+                  {isSubmitting
+                    ? <><Spinner />Booking...</>
+                    : <><SendIcon />Book Appointment</>
+                  }
+                </button>
+                <p style={{ textAlign: "center", fontSize: "12px", color: "#cbd5e1", marginTop: "12px", marginBottom: 0 }}>
+                  By submitting, you agree to our terms and conditions.
+                </p>
+              </form>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
       <style>{`
-        input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 0.6; }
-        input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
-        select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #000; }
-        ::-webkit-scrollbar-thumb:hover { background: #333; }
-        [data-aos] { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        * { box-sizing: border-box; }
+        input::placeholder, textarea::placeholder { color: #cbd5e1; }
+        input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: pointer; }
+        @media (max-width: 820px) {
+          .cp-grid { grid-template-columns: 1fr !important; }
+          .cp-two-col { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .cp-grid > div:last-child > div { padding: 24px 16px !important; }
+        }
       `}</style>
     </div>
+  );
+}
+
+/* ── Helpers ── */
+function FField({ label, required, error, children }) {
+  return (
+    <div style={{ marginBottom: "18px" }}>
+      <label style={{ display: "block", fontSize: "11px", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: "#475569", marginBottom: "7px" }}>
+        {label}{required && <span style={{ color: "#cbd5e1", marginLeft: "4px" }}>*</span>}
+      </label>
+      {children}
+      {error && <p style={{ fontSize: "12px", color: "#ef4444", marginTop: "4px", marginBottom: 0 }}>{error}</p>}
+    </div>
+  );
+}
+
+function IWrap({ icon, arrow, children }) {
+  return (
+    <div style={{ position: "relative" }}>
+      <IconSvg name={icon} color="#94a3b8" size={15} style={{ position: "absolute", left: "13px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", zIndex: 1 }} />
+      {children}
+      {arrow && (
+        <svg style={{ position: "absolute", right: "13px", top: "50%", transform: "translateY(-50%)", width: "14px", height: "14px", color: "#94a3b8", pointerEvents: "none" }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      )}
+    </div>
+  );
+}
+
+function Spinner() {
+  return <div style={{ width: "15px", height: "15px", border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "#fff", borderRadius: "50%", animation: "spin 0.65s linear infinite", flexShrink: 0 }} />;
+}
+
+function SendIcon() {
+  return (
+    <svg style={{ width: "15px", height: "15px" }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+    </svg>
+  );
+}
+
+function IconSvg({ name, color, size = 18, style: s = {} }) {
+  const paths = {
+    phone: <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />,
+    mail: <><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></>,
+    pin: <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></>,
+    clock: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>,
+    user: <><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" /></>,
+    cal: <><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></>,
+    msg: <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />,
+  };
+  return (
+    <svg style={{ width: size, height: size, color, display: "block", ...s }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      {paths[name]}
+    </svg>
   );
 }

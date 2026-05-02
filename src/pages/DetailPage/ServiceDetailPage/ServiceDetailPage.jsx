@@ -275,7 +275,7 @@ const ServiceDetailPage = () => {
                         Email
                       </p>
                       <p className="text-black font-medium text-sm">
-                        info@example.com
+                        reception.physiocentric@gmail.com
                       </p>
                     </div>
                   </div>

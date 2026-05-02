@@ -7,12 +7,10 @@ import {
   Mail,
   MapPin,
   Clock,
-  Send,
   CalendarCheck,
 } from "lucide-react";
 
-// ✅ Logo assets se import karo
-import logo from "../../assets/Logo.png"; // apna actual path yahan daalo
+import logo from "../../assets/Logo.png";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -41,6 +39,7 @@ export default function Navbar() {
     { name: "About", path: "/about-us" },
     { name: "Services", path: "/services" },
     { name: "Blog", path: "/blogs" },
+     { name: "Doctor", path: "/our-doctor" },
     { name: "Contact", path: "/contacts" },
   ];
 
@@ -55,16 +54,16 @@ export default function Navbar() {
         >
           <div className="max-w-7xl mx-auto px-4 py-2.5 flex justify-between items-center">
             <div className="text-xs tracking-widest uppercase text-gray-300">
-              Welcome to Chirokind Chiropractic Clinic
+              Welcome to PhysioCentric — Recover+Restore+Rebuild, New Delhi
             </div>
             <div className="flex items-center gap-6">
               <a
-                href="tel:+18004567890"
+                href="tel:+919810513841"
                 className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm"
               >
                 <Phone size={14} />
                 <span className="hidden sm:inline tracking-wide">
-                  (+1800)-456-7890
+                  098105 13841
                 </span>
               </a>
               <Link
@@ -81,19 +80,19 @@ export default function Navbar() {
         {/* Main Navbar - White */}
         <div className="bg-white">
           <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            {/* ✅ Logo from assets */}
+            {/* Logo */}
             <Link to="/" className="flex items-center gap-3">
               <img
                 src={logo}
-                alt="Chirokind Logo"
+                alt="PhysioCentric Logo"
                 className="w-12 h-12 object-contain"
               />
               <div>
                 <div className="text-xl font-bold text-black tracking-tight">
-                  Chirokind
+                  PhysioCentric
                 </div>
                 <div className="text-xs text-gray-400 tracking-widest uppercase">
-                  Chiropractic Clinic
+                  Recover+Restore+Rebuild
                 </div>
               </div>
             </Link>
@@ -124,7 +123,6 @@ export default function Navbar() {
 
             {/* Right Actions */}
             <div className="flex items-center gap-3">
-              {/* Mobile Menu Toggle */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="lg:hidden p-2 bg-black text-white rounded-sm hover:bg-gray-800 transition-colors"
@@ -132,7 +130,6 @@ export default function Navbar() {
                 {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
 
-              {/* Desktop Sidebar Toggle */}
               <button
                 onClick={() => setIsSidebarOpen(true)}
                 className="hidden lg:flex items-center gap-2 p-2.5 bg-black text-white rounded-sm hover:bg-gray-800 transition-colors"
@@ -196,18 +193,17 @@ export default function Navbar() {
           {/* Logo Section */}
           <div className="mb-8 pt-6">
             <div className="flex items-center gap-3 mb-4">
-              {/* ✅ Sidebar me bhi same logo */}
               <img
                 src={logo}
-                alt="Chirokind Logo"
+                alt="PhysioCentric Logo"
                 className="w-14 h-14 object-contain"
               />
               <div>
                 <div className="text-2xl font-bold text-black tracking-tight">
-                  Chirokind
+                  PhysioCentric
                 </div>
                 <div className="text-xs text-gray-400 tracking-widest uppercase">
-                  Chiropractic Clinic
+                  Recover+Restore+Rebuild
                 </div>
               </div>
             </div>
@@ -217,12 +213,12 @@ export default function Navbar() {
           {/* About Section */}
           <div className="mb-8">
             <h2 className="text-xl font-bold text-black mb-3 tracking-tight">
-              PhysioCentric & Recovery From Pain.
+              PhysioCentric — Recovery From Pain.
             </h2>
             <p className="text-gray-500 leading-relaxed text-sm">
-              Chirokind & Rehabilitation Clinic focuses on maintaining health
-              for people of all ages, helping patients manage pain and prevent
-              disease.
+              PhysioCentric is a trusted Recover+Restore+Rebuild in New Delhi,
+              rated 5.0 on Google. We help people of all ages manage pain,
+              recover faster, and prevent injury through expert-led care.
             </p>
           </div>
 
@@ -240,9 +236,9 @@ export default function Navbar() {
                   <MapPin size={16} className="text-white" />
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed pt-1">
-                  54B, Tailstoi Town 5238 MT,
+                  A-2, Block A, Gulmohar Park,
                   <br />
-                  La city, IA 522364
+                  New Delhi, Delhi 110049
                 </p>
               </div>
 
@@ -251,10 +247,10 @@ export default function Navbar() {
                   <Mail size={16} className="text-white" />
                 </div>
                 <a
-                  href="mailto:info@example.com"
+                  href="mailto:reception.physiocentric@gmail.com"
                   className="text-gray-600 hover:text-black transition-colors text-sm pt-2"
                 >
-                  info@example.com
+                  reception.physiocentric@gmail.com
                 </a>
               </div>
 
@@ -263,10 +259,10 @@ export default function Navbar() {
                   <Phone size={16} className="text-white" />
                 </div>
                 <a
-                  href="tel:+18004567890"
+                  href="tel:+919810513841"
                   className="text-gray-600 hover:text-black transition-colors text-sm pt-2"
                 >
-                  (+1800)-456-7890
+                  098105 13841
                 </a>
               </div>
 
@@ -275,16 +271,13 @@ export default function Navbar() {
                   <Clock size={16} className="text-white" />
                 </div>
                 <p className="text-gray-600 text-sm pt-2">
-                  Mon–Sat: 9:30 AM – 6:30 PM
+                  Mon–Sat: 9:00 AM – 7:00 PM
                 </p>
               </div>
             </div>
           </div>
 
           <div className="w-full h-px bg-gray-100 mb-8"></div>
-
-         
-    
         </div>
       </div>
     </>

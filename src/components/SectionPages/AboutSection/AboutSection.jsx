@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import aboutImage from '../../../assets/aboutsection.png'; // apna actual image path yahan daalo
 
 export default function AboutSection() {
   return (
@@ -21,21 +22,38 @@ export default function AboutSection() {
               style={{ fontFamily: "Lexend Peta, sans-serif" }}
               className="text-3xl md:text-4xl lg:text-5xl text-black leading-tight"
             >
-              Welcome to Physio Therapy & Chiropractic Clinic
+              Welcome to PhysioCentric — New Delhi's Trusted Physiotherapy Center
             </h2>
 
             {/* Paragraphs */}
             <div className="space-y-5">
               <p className="text-gray-700 text-lg leading-relaxed">
-                PhysioCentric is more popularly known as medical therapy which helps a patient
-                in the rehabilitation of various types of diseases and disabilities.
+                PhysioCentric is a leading physiotherapy center located in Gulmohar Park,
+                New Delhi — rated 5.0 ⭐ on Google by 37+ patients. We specialize in
+                evidence-based physiotherapy to help you recover, move better, and live pain-free.
               </p>
               <p className="text-gray-500 text-base leading-relaxed">
-                Physiotherapists have a better understanding of how the body works. They help
-                patients recover from pain, injury, paralysis, ligament injury, and neurological
-                conditions. Our physiotherapists are highly qualified and focused on maintaining
-                health for people of all ages.
+                Our expert physiotherapists treat a wide range of conditions including back pain,
+                joint pain, sports injuries, post-surgical rehabilitation, neurological conditions,
+                and more. With personalized treatment plans and state-of-the-art techniques,
+                we are committed to delivering real results for patients of all ages.
               </p>
+            </div>
+
+            {/* Info Pills */}
+            <div className="flex flex-wrap gap-4 pt-2">
+              <div className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-sm shadow-sm">
+                <span className="text-black font-bold text-sm">📍</span>
+                <span className="text-xs text-gray-600 tracking-wide">Gulmohar Park, New Delhi</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-sm shadow-sm">
+                <span className="text-black font-bold text-sm">🕐</span>
+                <span className="text-xs text-gray-600 tracking-wide">Mon–Sat: 9 AM – 7 PM</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-sm shadow-sm">
+                <span className="text-black font-bold text-sm">⭐</span>
+                <span className="text-xs text-gray-600 tracking-wide">5.0 · 37 Google Reviews</span>
+              </div>
             </div>
 
             {/* CTA */}
@@ -54,8 +72,8 @@ export default function AboutSection() {
             {/* Image */}
             <div className="relative overflow-hidden shadow-2xl z-10">
               <img
-                src="https://i.pinimg.com/736x/09/73/eb/0973eb1dfc7bbca9eadbbb4c25650729.jpg"
-                alt="Physiotherapy Treatment"
+                src={aboutImage}
+                alt="PhysioCentric Physiotherapy Center New Delhi"
                 className="w-full h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
