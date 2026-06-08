@@ -47,7 +47,7 @@ const App = () => {
         <Route path="/blogs/:slug" element={<BlogDetailPage />} />
         <Route path="/contacts" element={<ContactPage />} />
         <Route path="/service/:slug" element={<SmartServiceRoute />} />
-         <Route path="/our-doctor" element={<DoctorsPage />} />
+         <Route path="/our-doctors" element={<DoctorsPage />} />
       </Routes>
     </MainLayout>
   );

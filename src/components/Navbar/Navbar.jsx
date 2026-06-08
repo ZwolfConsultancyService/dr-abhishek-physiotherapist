@@ -39,7 +39,7 @@ export default function Navbar() {
     { name: "About", path: "/about-us" },
     { name: "Services", path: "/services" },
     { name: "Blog", path: "/blogs" },
-     { name: "Doctor", path: "/our-doctor" },
+     { name: "Team", path: "/our-doctors" },
     { name: "Contact", path: "/contacts" },
   ];
 
