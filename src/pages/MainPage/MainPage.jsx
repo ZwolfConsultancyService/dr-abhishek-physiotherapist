@@ -281,111 +281,136 @@
 
 
 
-import React, { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import React, { useEffect, useRef } from "react";
 
 import HeroSection from "../../components/SectionPages/HeroSection/HeroSection";
 import AboutSection from "../../components/SectionPages/AboutSection/AboutSection";
 import WhyChooseUsSection from "../../components/SectionPages/WhyChooseUsSection/WhyChooseUsSection";
 import ServicesSection from "../../components/SectionPages/ServicesSection/ServicesSection";
 import StatisticsSection from "../../components/SectionPages/StatisticsSection/StatisticsSection";
-import TestimonialSection from "../../components/SectionPages/TestimonialSection/TestimonialSection";
 import LatestBlogsSection from "../../components/SectionPages/LatestBlogsSection/LatestBlogsSection";
-import ContactSection from "../../components/SectionPages/ContactSection/ContactSection";
 
-const isMobile = () =>
-  typeof window !== "undefined" && window.innerWidth <= 768;
-
-const MainPage = () => {
+// ─── Tiny hook — no library needed ───────────────────────────────────────────
+function useScrollReveal() {
   useEffect(() => {
-    const mobile = isMobile();
+    // Reduced motion check — accessibility
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReduced) return;
 
-    AOS.init({
-      duration: mobile ? 600 : 900,   // Mobile pe fast — less jank
-      once: true,                      // Sirf ek baar — no re-trigger
-      easing: "ease-out",             // Simple easing — GPU friendly
-      offset: mobile ? 60 : 100,
-      delay: 0,                        // Delay hata diya — feels snappier
-      mirror: false,
-      disable: false,
-      debounceDelay: 50,
-      throttleDelay: 99,
-    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("sr-visible");
+            observer.unobserve(entry.target); // once=true — unobserve after trigger
+          }
+        });
+      },
+      {
+        threshold: 0.1,   // 10% visible hote hi trigger
+        rootMargin: "0px 0px -60px 0px", // Thoda pehle trigger
+      }
+    );
 
-    AOS.refresh();
+    // Sabhi sr- elements observe karo
+    const elements = document.querySelectorAll(".sr");
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
   }, []);
+}
 
-  // Mobile pe simple fade-up, desktop pe directional
-  const mobile = isMobile();
+// ─── Wrapper component ────────────────────────────────────────────────────────
+const Reveal = ({ children, direction = "up", delay = 0 }) => {
+  return (
+    <div
+      className={`sr sr-${direction}`}
+      style={{ "--sr-delay": `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+};
 
-  const aosProps = (desktopAos, duration = 900) => ({
-    "data-aos": mobile ? "fade-up" : desktopAos,
-    "data-aos-duration": mobile ? "600" : String(duration),
-    "data-aos-once": "true",
-  });
+// ─── Main Page ────────────────────────────────────────────────────────────────
+const MainPage = () => {
+  useScrollReveal();
 
   return (
     <div className="overflow-x-hidden">
-      <div {...aosProps("fade-up", 800)}>
+
+      <Reveal direction="up">
         <HeroSection />
-      </div>
+      </Reveal>
 
-      <div {...aosProps("fade-right", 900)}>
+      <Reveal direction="right">
         <AboutSection />
-      </div>
+      </Reveal>
 
-      <div {...aosProps("fade-left", 900)}>
+      <Reveal direction="left">
         <WhyChooseUsSection />
-      </div>
+      </Reveal>
 
-      <div {...aosProps("fade-up", 900)}>
+      <Reveal direction="up">
         <ServicesSection />
-      </div>
+      </Reveal>
 
-      <div {...aosProps("fade-up", 900)}>
+      <Reveal direction="up">
         <StatisticsSection />
-      </div>
+      </Reveal>
 
-      <div {...aosProps("fade-right", 900)}>
+      <Reveal direction="right">
         <LatestBlogsSection />
-      </div>
+      </Reveal>
 
       <style>{`
+        /* ── Base hidden state ───────────────────────────────── */
+        .sr {
+          opacity: 0;
+          transition:
+            opacity 0.65s ease,
+            transform 0.65s ease;
+          transition-delay: var(--sr-delay, 0ms);
+          /* NO will-change here — sirf animate ke waqt lagega */
+        }
+
+        /* ── Direction transforms ────────────────────────────── */
+        .sr-up    { transform: translateY(30px); }
+        .sr-down  { transform: translateY(-30px); }
+        .sr-right { transform: translateX(-30px); }
+        .sr-left  { transform: translateX(30px); }
+
+        /* ── Visible state ───────────────────────────────────── */
+        .sr-visible {
+          opacity: 1;
+          transform: none;
+          will-change: auto; /* GPU memory release — phone ke liye critical */
+        }
+
+        /* ── Mobile — sirf fade, koi slide nahi ─────────────── */
+        @media (max-width: 768px) {
+          .sr-right,
+          .sr-left {
+            transform: translateY(20px); /* Horizontal slide phone pe janky hota */
+          }
+          .sr {
+            transition-duration: 0.5s; /* Phone pe thoda fast */
+          }
+        }
+
+        /* ── Smooth scroll ───────────────────────────────────── */
         html {
           scroll-behavior: smooth;
         }
 
-        /* GPU ko sirf opacity + transform do — no will-change overload */
-        [data-aos] {
-          transition-timing-function: ease-out;
-          backface-visibility: hidden;
-        }
-
-        /* will-change SIRF animate hone se pehle, baad mein hata do */
-        [data-aos]:not(.aos-animate) {
-          will-change: opacity, transform;
-        }
-        [data-aos].aos-animate {
-          will-change: auto;  /* ← Yahi main fix hai — GPU memory free karta hai */
-        }
-
-        /* Mobile — sidhe fade, koi slide nahi */
-        @media screen and (max-width: 768px) {
-          [data-aos="fade-right"],
-          [data-aos="fade-left"] {
-            transform: translateY(20px) !important;  /* Horizontal slide hata */
-          }
-          [data-aos].aos-animate {
-            transform: none !important;
-          }
-        }
-
-        /* Accessibility */
+        /* ── Accessibility ───────────────────────────────────── */
         @media (prefers-reduced-motion: reduce) {
-          [data-aos] {
-            transition-duration: 0ms !important;
-            animation: none !important;
+          .sr {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
           }
         }
       `}</style>
