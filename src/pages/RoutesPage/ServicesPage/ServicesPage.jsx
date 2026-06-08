@@ -87,10 +87,7 @@ const ServicesPage = () => {
             </h2>
 
             <p className="text-gray-500 text-base md:text-lg leading-relaxed">
-              Nemo enim ipsam voluptatem quia voluptas sit aspernatur sed quia
-              consequuntur magni dolores eos qui ratione voluptatem sequi
-              nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-              sit amet, consectetur, adipisci velit.
+           We offer comprehensive physical therapy services designed to reduce pain, restore mobility, and improve overall physical function. Our personalized treatment plans help patients recover from injuries, manage chronic conditions, and achieve long-term wellness goals.
             </p>
           </div>
 
