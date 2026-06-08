@@ -279,9 +279,7 @@
 
 // export default MainPage;
 
-
-
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 import HeroSection from "../../components/SectionPages/HeroSection/HeroSection";
 import AboutSection from "../../components/SectionPages/AboutSection/AboutSection";
@@ -290,66 +288,53 @@ import ServicesSection from "../../components/SectionPages/ServicesSection/Servi
 import StatisticsSection from "../../components/SectionPages/StatisticsSection/StatisticsSection";
 import LatestBlogsSection from "../../components/SectionPages/LatestBlogsSection/LatestBlogsSection";
 
-// ─── Tiny hook — no library needed ───────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
-    // Reduced motion check — accessibility
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReduced) return;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      document.querySelectorAll(".sr").forEach((el) => el.classList.add("sr-visible"));
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("sr-visible");
-            observer.unobserve(entry.target); // once=true — unobserve after trigger
+            observer.unobserve(entry.target);
           }
         });
       },
       {
-        threshold: 0.1,   // 10% visible hote hi trigger
-        rootMargin: "0px 0px -60px 0px", // Thoda pehle trigger
+        threshold: 0.08,
+        rootMargin: "0px 0px -40px 0px",
       }
     );
 
-    // Sabhi sr- elements observe karo
-    const elements = document.querySelectorAll(".sr");
-    elements.forEach((el) => observer.observe(el));
-
+    document.querySelectorAll(".sr").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 }
 
-// ─── Wrapper component ────────────────────────────────────────────────────────
-const Reveal = ({ children, direction = "up", delay = 0 }) => {
-  return (
-    <div
-      className={`sr sr-${direction}`}
-      style={{ "--sr-delay": `${delay}ms` }}
-    >
-      {children}
-    </div>
-  );
-};
+const Reveal = ({ children, direction = "up" }) => (
+  <div className={`sr sr-${direction}`}>
+    {children}
+  </div>
+);
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
 const MainPage = () => {
   useScrollReveal();
 
   return (
-    <div className="overflow-x-hidden">
+    <>
+      {/* HeroSection — NO Reveal, seedha render */}
+      <HeroSection />
 
       <Reveal direction="up">
-        <HeroSection />
-      </Reveal>
-
-      <Reveal direction="right">
         <AboutSection />
       </Reveal>
 
-      <Reveal direction="left">
+      <Reveal direction="up">
         <WhyChooseUsSection />
       </Reveal>
 
@@ -361,60 +346,55 @@ const MainPage = () => {
         <StatisticsSection />
       </Reveal>
 
-      <Reveal direction="right">
+      <Reveal direction="up">
         <LatestBlogsSection />
       </Reveal>
 
       <style>{`
-        /* ── Base hidden state ───────────────────────────────── */
-        .sr {
-          opacity: 0;
-          transition:
-            opacity 0.65s ease,
-            transform 0.65s ease;
-          transition-delay: var(--sr-delay, 0ms);
-          /* NO will-change here — sirf animate ke waqt lagega */
-        }
-
-        /* ── Direction transforms ────────────────────────────── */
-        .sr-up    { transform: translateY(30px); }
-        .sr-down  { transform: translateY(-30px); }
-        .sr-right { transform: translateX(-30px); }
-        .sr-left  { transform: translateX(30px); }
-
-        /* ── Visible state ───────────────────────────────────── */
-        .sr-visible {
-          opacity: 1;
-          transform: none;
-          will-change: auto; /* GPU memory release — phone ke liye critical */
-        }
-
-        /* ── Mobile — sirf fade, koi slide nahi ─────────────── */
-        @media (max-width: 768px) {
-          .sr-right,
-          .sr-left {
-            transform: translateY(20px); /* Horizontal slide phone pe janky hota */
-          }
-          .sr {
-            transition-duration: 0.5s; /* Phone pe thoda fast */
-          }
-        }
-
-        /* ── Smooth scroll ───────────────────────────────────── */
         html {
           scroll-behavior: smooth;
         }
 
-        /* ── Accessibility ───────────────────────────────────── */
-        @media (prefers-reduced-motion: reduce) {
+        /* ── Hidden state ── */
+        .sr {
+          opacity: 0;
+          transform: translateY(24px);
+          /* contain layout so sibling elements shift nahi karte */
+          contain: layout style;
+        }
+
+        /* ── Visible state ── */
+        .sr-visible {
+          opacity: 1;
+          transform: translateY(0);
+          /* GPU pe sirf transition ke waqt, phir release */
+          transition:
+            opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: auto;
+          contain: none;
+        }
+
+        /* ── Mobile — aur bhi light ── */
+        @media (max-width: 768px) {
           .sr {
+            transform: translateY(16px); /* kam movement = less jank */
+          }
+          .sr-visible {
+            transition-duration: 0.4s;
+          }
+        }
+
+        /* ── Accessibility ── */
+        @media (prefers-reduced-motion: reduce) {
+          .sr, .sr-visible {
             opacity: 1 !important;
             transform: none !important;
             transition: none !important;
           }
         }
       `}</style>
-    </div>
+    </>
   );
 };
 
