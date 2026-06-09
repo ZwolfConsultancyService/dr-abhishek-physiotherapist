@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const API_BASE_URL = "https://dr-abhishek-physiotherapist-backend.onrender.com/api";
 
@@ -76,28 +77,113 @@ export default function ContactPage() {
 
   return (
     <div style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif", background: "#f8fafc", minHeight: "100vh" }}>
+
+      {/* ───────────────── SEO HEAD ───────────────── */}
+      <Helmet>
+        {/* Primary Meta */}
+        <title>Book Appointment – PhysioCentric | Physiotherapy Clinic New Delhi</title>
+        <meta
+          name="description"
+          content="Book a physiotherapy appointment at PhysioCentric, Gulmohar Park, New Delhi. Call 09810513841 or fill our online form. Mon–Sat, 10AM–7PM. Rated 5.0 ★ on Google."
+        />
+        <meta name="keywords" content="book physiotherapy appointment Delhi, contact physiotherapist New Delhi, PhysioCentric appointment, physio clinic Gulmohar Park contact, physiotherapy booking Delhi" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.physiocentric.in/contacts" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.physiocentric.in/contacts" />
+        <meta property="og:title" content="Book Appointment – PhysioCentric Physiotherapy, New Delhi" />
+        <meta property="og:description" content="Book your physiotherapy session online or call 09810513841. Located in Gulmohar Park, New Delhi. Open Mon–Sat, 10AM–7PM." />
+        <meta property="og:image" content="https://www.physiocentric.in/og-image.jpg" />
+        <meta property="og:locale" content="en_IN" />
+        <meta property="og:site_name" content="PhysioCentric" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Book Physiotherapy Appointment – PhysioCentric, New Delhi" />
+        <meta name="twitter:description" content="Online appointment booking for PhysioCentric, New Delhi's top-rated physio clinic. Mon–Sat, 10AM–7PM." />
+        <meta name="twitter:image" content="https://www.physiocentric.in/og-image.jpg" />
+
+        {/* Structured Data – ContactPage + Service */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "ContactPage",
+                "url": "https://www.physiocentric.in/contacts",
+                "name": "Book Appointment – PhysioCentric",
+                "description": "Online appointment booking and contact information for PhysioCentric physiotherapy clinic in New Delhi.",
+                "inLanguage": "en-IN"
+              },
+              {
+                "@type": "MedicalBusiness",
+                "name": "PhysioCentric",
+                "url": "https://www.physiocentric.in",
+                "telephone": "+919810513841",
+                "email": "info@physiocentric.com",
+                "address": {
+                  "@type": "PostalAddress",
+                  "streetAddress": "A-2, Block A, Gulmohar Park",
+                  "addressLocality": "New Delhi",
+                  "addressRegion": "Delhi",
+                  "postalCode": "110049",
+                  "addressCountry": "IN"
+                },
+                "openingHoursSpecification": [
+                  {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+                    "opens": "10:00",
+                    "closes": "19:00"
+                  }
+                ],
+                "geo": {
+                  "@type": "GeoCoordinates",
+                  "latitude": 28.5467,
+                  "longitude": 77.2090
+                },
+                "aggregateRating": {
+                  "@type": "AggregateRating",
+                  "ratingValue": "5.0",
+                  "reviewCount": "37",
+                  "bestRating": "5"
+                }
+              }
+            ]
+          })}
+        </script>
+      </Helmet>
+
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet" />
 
       {/* HERO */}
       <div style={{ position: "relative", height: "320px", background: "#0d1117", overflow: "hidden" }}>
         <img
           src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&h=640&fit=crop"
-          alt=""
+          alt="PhysioCentric contact and appointment booking page"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.25 }}
+          loading="eager"
+          fetchpriority="high"
         />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,rgba(13,17,23,0.9) 0%,rgba(15,23,42,0.75) 100%)" }} />
-        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "3px", background: "linear-gradient(180deg,transparent,#3b82f6,transparent)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,rgba(13,17,23,0.9) 0%,rgba(15,23,42,0.75) 100%)" }} aria-hidden="true" />
+        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "3px", background: "linear-gradient(180deg,transparent,#3b82f6,transparent)" }} aria-hidden="true" />
         <div style={{ position: "relative", zIndex: 2, maxWidth: "1200px", margin: "0 auto", padding: "0 24px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end", paddingBottom: "48px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
-            <div style={{ width: "40px", height: "1px", background: "#60a5fa" }} />
+            <div style={{ width: "40px", height: "1px", background: "#60a5fa" }} aria-hidden="true" />
             <span style={{ fontSize: "11px", letterSpacing: "4px", textTransform: "uppercase", color: "#93c5fd", fontWeight: 500 }}>PhysioCentric</span>
           </div>
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 600, color: "#fff", margin: 0, lineHeight: 1.08 }}>
             Get in <em style={{ color: "#93c5fd" }}>Touch</em>
           </h1>
-          <div style={{ marginTop: "16px", display: "flex", gap: "8px", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
-            <span>Home</span><span>›</span><span style={{ color: "rgba(255,255,255,0.75)" }}>Contact Us</span>
-          </div>
+          <nav aria-label="Breadcrumb" style={{ marginTop: "16px" }}>
+            <ol style={{ display: "flex", gap: "8px", fontSize: "13px", color: "rgba(255,255,255,0.4)", listStyle: "none", padding: 0, margin: 0 }}>
+              <li><a href="/" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>Home</a></li>
+              <li aria-hidden="true">›</li>
+              <li><span style={{ color: "rgba(255,255,255,0.75)" }} aria-current="page">Contact Us</span></li>
+            </ol>
+          </nav>
         </div>
       </div>
 
@@ -111,7 +197,7 @@ export default function ContactPage() {
             { color: "#d97706", bg: "#fffbeb", icon: "clock", label: "Hours", lines: ["Mon–Sat: 10am – 7pm", "Sun: Closed"] },
           ].map((c, i) => (
             <div key={i} style={{ padding: "24px 20px", borderRight: "1px solid #f1f5f9", borderTop: `3px solid ${c.color}` }}>
-              <div style={{ width: "38px", height: "38px", borderRadius: "10px", background: c.bg, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "12px" }}>
+              <div style={{ width: "38px", height: "38px", borderRadius: "10px", background: c.bg, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "12px" }} aria-hidden="true">
                 <IconSvg name={c.icon} color={c.color} />
               </div>
               <div style={{ fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: "#94a3b8", fontWeight: 600, marginBottom: "5px" }}>{c.label}</div>
@@ -129,7 +215,7 @@ export default function ContactPage() {
           <div>
             <div style={{ marginBottom: "24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                <div style={{ width: "28px", height: "1px", background: "#3b82f6" }} />
+                <div style={{ width: "28px", height: "1px", background: "#3b82f6" }} aria-hidden="true" />
                 <span style={{ fontSize: "10px", letterSpacing: "3.5px", textTransform: "uppercase", color: "#3b82f6", fontWeight: 600 }}>Find Us</span>
               </div>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.4rem,3vw,1.9rem)", fontWeight: 600, color: "#0f172a", margin: "0 0 10px" }}>
@@ -142,44 +228,45 @@ export default function ContactPage() {
 
             {/* MAP */}
             <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #e2e8f0", boxShadow: "0 4px 20px rgba(0,0,0,0.06)" }}>
-              <div style={{ height: "3px", background: "linear-gradient(90deg,#3b82f6,#7c3aed)" }} />
+              <div style={{ height: "3px", background: "linear-gradient(90deg,#3b82f6,#7c3aed)" }} aria-hidden="true" />
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d17279.444892527215!2d77.19908151661608!3d28.546738155120085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3c2bae79c4b%3A0x8c6cf571e1cd86ce!2sPhysioCentric!5e0!3m2!1sen!2sin!4v1777618165437!5m2!1sen!2sin"
                 width="100%" height="280"
                 style={{ border: 0, display: "block", width: "100%" }}
                 allowFullScreen loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="PhysioCentric Map"
+                title="PhysioCentric location map – Gulmohar Park, New Delhi"
               />
               <div style={{ padding: "13px 16px", display: "flex", alignItems: "center", gap: "8px", background: "#fff", borderTop: "1px solid #f1f5f9" }}>
                 <IconSvg name="pin" color="#7c3aed" size={14} />
-                <span style={{ fontSize: "12px", color: "#475569" }}>A-2, Block A, Gulmohar Park, New Delhi 110049</span>
+                <address style={{ fontSize: "12px", color: "#475569", fontStyle: "normal" }}>A-2, Block A, Gulmohar Park, New Delhi 110049</address>
               </div>
             </div>
 
             {/* CALL CTA */}
             <a href="tel:09810513841"
+              aria-label="Call PhysioCentric at 09810513841"
               style={{ display: "flex", alignItems: "center", gap: "16px", marginTop: "16px", padding: "18px 22px", borderRadius: "12px", background: "#0f172a", color: "#fff", textDecoration: "none", transition: "background 0.2s" }}
               onMouseEnter={e => e.currentTarget.style.background = "#1d4ed8"}
               onMouseLeave={e => e.currentTarget.style.background = "#0f172a"}
             >
-              <div style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <div style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }} aria-hidden="true">
                 <IconSvg name="phone" color="white" size={17} />
               </div>
               <div>
                 <div style={{ fontSize: "10px", letterSpacing: "3px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "3px" }}>Call Direct</div>
                 <div style={{ fontSize: "17px", fontWeight: 600 }}>09810513841</div>
               </div>
-              <div style={{ marginLeft: "auto", fontSize: "20px", opacity: 0.3 }}>›</div>
+              <div style={{ marginLeft: "auto", fontSize: "20px", opacity: 0.3 }} aria-hidden="true">›</div>
             </a>
           </div>
 
           {/* RIGHT — FORM */}
           <div style={{ background: "#fff", borderRadius: "16px", border: "1px solid #e2e8f0", boxShadow: "0 4px 32px rgba(0,0,0,0.06)", overflow: "hidden" }}>
-            <div style={{ height: "4px", background: "linear-gradient(90deg,#3b82f6,#7c3aed,#06b6d4)" }} />
+            <div style={{ height: "4px", background: "linear-gradient(90deg,#3b82f6,#7c3aed,#06b6d4)" }} aria-hidden="true" />
             <div style={{ padding: "36px 32px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
-                <div style={{ width: "28px", height: "1px", background: "#3b82f6" }} />
+                <div style={{ width: "28px", height: "1px", background: "#3b82f6" }} aria-hidden="true" />
                 <span style={{ fontSize: "10px", letterSpacing: "3.5px", textTransform: "uppercase", color: "#3b82f6", fontWeight: 600 }}>Schedule a Visit</span>
               </div>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.4rem,3vw,1.9rem)", fontWeight: 600, color: "#0f172a", margin: "0 0 6px" }}>
@@ -188,8 +275,8 @@ export default function ContactPage() {
               <p style={{ fontSize: "14px", color: "#94a3b8", margin: "0 0 28px" }}>Fill in your details — we'll confirm within 24 hours.</p>
 
               {submitStatus === "success" && (
-                <div style={{ display: "flex", gap: "12px", padding: "13px 15px", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "8px", marginBottom: "20px" }}>
-                  <span style={{ color: "#16a34a", fontWeight: 700 }}>✓</span>
+                <div role="alert" style={{ display: "flex", gap: "12px", padding: "13px 15px", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "8px", marginBottom: "20px" }}>
+                  <span style={{ color: "#16a34a", fontWeight: 700 }} aria-hidden="true">✓</span>
                   <div>
                     <div style={{ fontWeight: 600, color: "#15803d", fontSize: "14px" }}>Appointment Booked!</div>
                     <div style={{ fontSize: "13px", color: "#16a34a" }}>We'll confirm within 24 hours.</div>
@@ -197,8 +284,8 @@ export default function ContactPage() {
                 </div>
               )}
               {submitStatus === "error" && (
-                <div style={{ display: "flex", gap: "12px", padding: "13px 15px", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "8px", marginBottom: "20px" }}>
-                  <span style={{ color: "#dc2626", fontWeight: 700 }}>!</span>
+                <div role="alert" style={{ display: "flex", gap: "12px", padding: "13px 15px", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "8px", marginBottom: "20px" }}>
+                  <span style={{ color: "#dc2626", fontWeight: 700 }} aria-hidden="true">!</span>
                   <div>
                     <div style={{ fontWeight: 600, color: "#991b1b", fontSize: "14px" }}>Booking Failed</div>
                     <div style={{ fontSize: "13px", color: "#dc2626" }}>Please try again or call us directly.</div>
@@ -206,12 +293,13 @@ export default function ContactPage() {
                 </div>
               )}
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} noValidate>
                 {/* Full Name */}
                 <FField label="Full Name" required error={errors.fullName}>
                   <IWrap icon="user">
                     <input type="text" name="fullName" value={formData.fullName} onChange={handleChange}
                       placeholder="Your full name" disabled={isSubmitting}
+                      autoComplete="name"
                       style={baseInputStyle("fullName")}
                       onFocus={e => e.target.style.borderColor = "#3b82f6"}
                       onBlur={e => e.target.style.borderColor = errors.fullName ? "#ef4444" : "#e2e8f0"}
@@ -224,6 +312,7 @@ export default function ContactPage() {
                     <IWrap icon="mail">
                       <input type="email" name="email" value={formData.email} onChange={handleChange}
                         placeholder="your@email.com" disabled={isSubmitting}
+                        autoComplete="email"
                         style={baseInputStyle("email")}
                         onFocus={e => e.target.style.borderColor = "#3b82f6"}
                         onBlur={e => e.target.style.borderColor = errors.email ? "#ef4444" : "#e2e8f0"}
@@ -234,6 +323,7 @@ export default function ContactPage() {
                     <IWrap icon="phone">
                       <input type="tel" name="phone" value={formData.phone} onChange={handleChange}
                         placeholder="10-digit number" disabled={isSubmitting}
+                        autoComplete="tel"
                         style={baseInputStyle("phone")}
                         onFocus={e => e.target.style.borderColor = "#3b82f6"}
                         onBlur={e => e.target.style.borderColor = errors.phone ? "#ef4444" : "#e2e8f0"}
@@ -247,6 +337,7 @@ export default function ContactPage() {
                     <IWrap icon="cal">
                       <input type="date" name="preferredDate" value={formData.preferredDate} onChange={handleChange}
                         min={new Date().toISOString().split("T")[0]} disabled={isSubmitting}
+                        aria-label="Preferred appointment date"
                         style={{ ...baseInputStyle("preferredDate"), colorScheme: "light" }}
                         onFocus={e => e.target.style.borderColor = "#3b82f6"}
                         onBlur={e => e.target.style.borderColor = errors.preferredDate ? "#ef4444" : "#e2e8f0"}
@@ -257,6 +348,7 @@ export default function ContactPage() {
                     <IWrap icon="clock" arrow>
                       <select name="preferredTime" value={formData.preferredTime} onChange={handleChange}
                         disabled={isSubmitting}
+                        aria-label="Preferred appointment time"
                         style={{ ...baseInputStyle("preferredTime"), appearance: "none", cursor: "pointer" }}
                         onFocus={e => e.target.style.borderColor = "#3b82f6"}
                         onBlur={e => e.target.style.borderColor = errors.preferredTime ? "#ef4444" : "#e2e8f0"}
@@ -281,6 +373,7 @@ export default function ContactPage() {
                 </FField>
 
                 <button type="submit" disabled={isSubmitting}
+                  aria-label="Submit appointment booking form"
                   style={{ width: "100%", padding: "14px 20px", marginTop: "4px", background: isSubmitting ? "#94a3b8" : "#0f172a", color: "#fff", border: "none", borderRadius: "10px", cursor: isSubmitting ? "not-allowed" : "pointer", fontFamily: "inherit", fontSize: "12px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", transition: "all 0.2s" }}
                   onMouseEnter={e => { if (!isSubmitting) { e.currentTarget.style.background = "#1d4ed8"; e.currentTarget.style.transform = "translateY(-1px)"; } }}
                   onMouseLeave={e => { e.currentTarget.style.background = isSubmitting ? "#94a3b8" : "#0f172a"; e.currentTarget.style.transform = "none"; }}
@@ -321,10 +414,10 @@ function FField({ label, required, error, children }) {
   return (
     <div style={{ marginBottom: "18px" }}>
       <label style={{ display: "block", fontSize: "11px", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: "#475569", marginBottom: "7px" }}>
-        {label}{required && <span style={{ color: "#cbd5e1", marginLeft: "4px" }}>*</span>}
+        {label}{required && <span style={{ color: "#cbd5e1", marginLeft: "4px" }} aria-hidden="true">*</span>}
       </label>
       {children}
-      {error && <p style={{ fontSize: "12px", color: "#ef4444", marginTop: "4px", marginBottom: 0 }}>{error}</p>}
+      {error && <p role="alert" style={{ fontSize: "12px", color: "#ef4444", marginTop: "4px", marginBottom: 0 }}>{error}</p>}
     </div>
   );
 }
@@ -335,7 +428,7 @@ function IWrap({ icon, arrow, children }) {
       <IconSvg name={icon} color="#94a3b8" size={15} style={{ position: "absolute", left: "13px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", zIndex: 1 }} />
       {children}
       {arrow && (
-        <svg style={{ position: "absolute", right: "13px", top: "50%", transform: "translateY(-50%)", width: "14px", height: "14px", color: "#94a3b8", pointerEvents: "none" }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg style={{ position: "absolute", right: "13px", top: "50%", transform: "translateY(-50%)", width: "14px", height: "14px", color: "#94a3b8", pointerEvents: "none" }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
           <polyline points="6 9 12 15 18 9" />
         </svg>
       )}
@@ -344,12 +437,12 @@ function IWrap({ icon, arrow, children }) {
 }
 
 function Spinner() {
-  return <div style={{ width: "15px", height: "15px", border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "#fff", borderRadius: "50%", animation: "spin 0.65s linear infinite", flexShrink: 0 }} />;
+  return <div style={{ width: "15px", height: "15px", border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "#fff", borderRadius: "50%", animation: "spin 0.65s linear infinite", flexShrink: 0 }} aria-label="Loading" />;
 }
 
 function SendIcon() {
   return (
-    <svg style={{ width: "15px", height: "15px" }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg style={{ width: "15px", height: "15px" }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
       <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
     </svg>
   );
@@ -366,7 +459,7 @@ function IconSvg({ name, color, size = 18, style: s = {} }) {
     msg: <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />,
   };
   return (
-    <svg style={{ width: size, height: size, color, display: "block", ...s }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg style={{ width: size, height: size, color, display: "block", ...s }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
       {paths[name]}
     </svg>
   );

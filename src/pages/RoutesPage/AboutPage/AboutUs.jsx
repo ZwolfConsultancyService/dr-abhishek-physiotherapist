@@ -1,14 +1,82 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import WhyChooseUsSection from "../../../components/SectionPages/WhyChooseUsSection/WhyChooseUsSection";
 import TestimonialSection from "../../../components/SectionPages/TestimonialSection/TestimonialSection";
 
 export default function AboutUs() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Banner */}
+
+      {/* ───────────────── SEO HEAD ───────────────── */}
+      <Helmet>
+        {/* Primary Meta */}
+        <title>About Us – PhysioCentric | Trusted Physiotherapy Clinic in New Delhi</title>
+        <meta
+          name="description"
+          content="Learn about PhysioCentric — New Delhi's top-rated physiotherapy centre with 25+ years of excellence. Meet our expert therapists and discover our approach to personalised pain relief."
+        />
+        <meta name="keywords" content="about PhysioCentric, physiotherapy clinic New Delhi, experienced physiotherapist Delhi, best physio clinic Gulmohar Park, physiotherapy team Delhi, back pain specialist New Delhi" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.physiocentric.in/about" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.physiocentric.in/about" />
+        <meta property="og:title" content="About PhysioCentric – Expert Physiotherapy in New Delhi" />
+        <meta property="og:description" content="25+ years of excellence in physiotherapy. Meet the team behind New Delhi's most trusted physio clinic in Gulmohar Park." />
+        <meta property="og:image" content="https://www.physiocentric.in/og-image.jpg" />
+        <meta property="og:locale" content="en_IN" />
+        <meta property="og:site_name" content="PhysioCentric" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About PhysioCentric – New Delhi's Trusted Physio Clinic" />
+        <meta name="twitter:description" content="25+ years of excellence. 1700+ happy patients. Personalised physiotherapy in Gulmohar Park, New Delhi." />
+        <meta name="twitter:image" content="https://www.physiocentric.in/og-image.jpg" />
+
+        {/* Structured Data – AboutPage + MedicalBusiness */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "AboutPage",
+                "url": "https://www.physiocentric.in/about",
+                "name": "About PhysioCentric",
+                "description": "PhysioCentric is a leading physiotherapy centre in Gulmohar Park, New Delhi, with 25+ years of experience treating back pain, joint issues, and sports injuries.",
+                "inLanguage": "en-IN"
+              },
+              {
+                "@type": "MedicalBusiness",
+                "name": "PhysioCentric",
+                "url": "https://www.physiocentric.in",
+                "telephone": "+919810513841",
+                "address": {
+                  "@type": "PostalAddress",
+                  "streetAddress": "A-2, Block A, Gulmohar Park",
+                  "addressLocality": "New Delhi",
+                  "addressRegion": "Delhi",
+                  "postalCode": "110049",
+                  "addressCountry": "IN"
+                },
+                "foundingDate": "2000",
+                "numberOfEmployees": { "@type": "QuantitativeValue", "value": 27 },
+                "aggregateRating": {
+                  "@type": "AggregateRating",
+                  "ratingValue": "5.0",
+                  "reviewCount": "37",
+                  "bestRating": "5"
+                }
+              }
+            ]
+          })}
+        </script>
+      </Helmet>
+
+      {/* ───────────────── HERO BANNER ───────────────── */}
       <div className="relative h-[400px] sm:h-[450px] md:h-[500px] bg-black overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 opacity-10" aria-hidden="true">
           <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
         </div>
 
@@ -17,50 +85,56 @@ export default function AboutUs() {
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mb-4 sm:mb-6 font-bold">
               About Us
             </h1>
-            <div className="flex items-center text-white/80 text-sm sm:text-base">
-              <Link to="/" className="hover:text-white transition-colors">Home</Link>
-              <span className="mx-2 sm:mx-3">/</span>
-              <span className="text-white font-medium">About Us</span>
-            </div>
+            <nav aria-label="Breadcrumb">
+              <ol className="flex items-center text-white/80 text-sm sm:text-base list-none p-0 m-0 gap-2">
+                <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
+                <li aria-hidden="true"><span className="mx-1">/</span></li>
+                <li><span className="text-white font-medium" aria-current="page">About Us</span></li>
+              </ol>
+            </nav>
             <p className="mt-4 sm:mt-6 text-base sm:text-lg text-white/60 max-w-xl tracking-wide">
-              Professional Care & Dedicated Service
+              Professional Care &amp; Dedicated Service
             </p>
           </div>
         </div>
 
         {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
+        <div className="absolute bottom-0 left-0 right-0" aria-hidden="true">
           <svg className="w-full h-12 sm:h-16" preserveAspectRatio="none" viewBox="0 0 1200 120" fill="none">
             <path d="M0 0L50 10C100 20 200 40 300 45C400 50 500 40 600 35C700 30 800 30 900 35C1000 40 1100 50 1150 55L1200 60V120H0V0Z" fill="white"/>
           </svg>
         </div>
       </div>
 
-      {/* Content Section */}
+      {/* ───────────────── CONTENT SECTION ───────────────── */}
       <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-start">
+
           {/* Image */}
           <div className="relative order-2 lg:order-1">
             <div className="bg-gray-50 overflow-hidden shadow-xl">
               <div className="aspect-[4/5] sm:aspect-[3/4] relative">
                 <img
                   src="https://i.pinimg.com/736x/76/43/bb/7643bb9b2377267262cc635b7b3c7b8b.jpg"
-                  alt="About Our Clinic"
+                  alt="PhysioCentric clinic interior — expert physiotherapy care in New Delhi"
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  width={600}
+                  height={750}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true"></div>
 
                 {/* Bottom Card */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
                   <div className="bg-white/95 backdrop-blur-sm p-4 sm:p-6 shadow-lg">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-black flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-black flex items-center justify-center flex-shrink-0" aria-hidden="true">
                         <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                       </div>
                       <div>
-                        <h4 className="text-sm sm:text-base font-bold text-gray-900">25+ Years</h4>
+                        <h3 className="text-sm sm:text-base font-bold text-gray-900">25+ Years</h3>
                         <p className="text-xs sm:text-sm text-gray-500">Of Excellence</p>
                       </div>
                     </div>
@@ -68,15 +142,15 @@ export default function AboutUs() {
                 </div>
               </div>
             </div>
-            <div className="hidden sm:block absolute -bottom-4 -right-4 w-24 h-24 bg-gray-200 rounded-full opacity-40 blur-2xl"></div>
-            <div className="hidden sm:block absolute -top-4 -left-4 w-32 h-32 bg-gray-100 rounded-full opacity-60 blur-3xl"></div>
+            <div className="hidden sm:block absolute -bottom-4 -right-4 w-24 h-24 bg-gray-200 rounded-full opacity-40 blur-2xl" aria-hidden="true"></div>
+            <div className="hidden sm:block absolute -top-4 -left-4 w-32 h-32 bg-gray-100 rounded-full opacity-60 blur-3xl" aria-hidden="true"></div>
           </div>
 
           {/* Text Content */}
           <div className="order-1 lg:order-2">
             <div className="mb-6 sm:mb-8">
               <div className="flex items-center mb-4 mt-26">
-                <div className="w-10 sm:w-12 h-0.5 bg-black mr-3"></div>
+                <div className="w-10 sm:w-12 h-0.5 bg-black mr-3" aria-hidden="true"></div>
                 <span className="text-black text-xs sm:text-sm tracking-widest uppercase font-semibold">
                   Who We Are
                 </span>
@@ -111,11 +185,7 @@ export default function AboutUs() {
 
       <WhyChooseUsSection />
 
-  
-
-   
-
-      {/* Stats Section */}
+      {/* ───────────────── STATS SECTION ───────────────── */}
       <div className="bg-black border-y border-gray-800 py-12 sm:py-16">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
@@ -126,20 +196,21 @@ export default function AboutUs() {
               { value: "10+", label: "Years Experience", path: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" }
             ].map((stat, i) => (
               <div key={i} className="text-center group">
-                <div className="flex justify-center mb-4">
+                <div className="flex justify-center mb-4" aria-hidden="true">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 border border-gray-700 flex items-center justify-center group-hover:border-white transition-colors duration-300">
                     <svg className="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={stat.path}/>
                     </svg>
                   </div>
                 </div>
-                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2">{stat.value}</h3>
+                <p className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2">{stat.value}</p>
                 <p className="text-xs sm:text-sm text-gray-400 tracking-widest uppercase">{stat.label}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
+
     </div>
   );
 }

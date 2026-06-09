@@ -1,23 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import {
-  Phone,
-  MapPin,
-  Clock,
-  Award,
-  Users,
-  Star,
-  ChevronRight,
-  Stethoscope,
-  Heart,
-  Activity,
-  Zap,
-  GraduationCap,
-  BadgeCheck,
+  Phone, MapPin, Clock, Award, Users, Star,
+  ChevronRight, Stethoscope, Heart, Activity, Zap,
+  GraduationCap, BadgeCheck,
 } from "lucide-react";
 
 // ── Image imports ─────────────────────────────────────────────────
-import headDoctor from "../../assets/teamfolder/head.jpeg"; // apni head doctor ki image
+import headDoctor from "../../assets/teamfolder/head.jpeg";
 import doctor1 from "../../assets/teamfolder/01.jpeg";
 import doctor2 from "../../assets/teamfolder/02.jpeg";
 import doctor3 from "../../assets/teamfolder/03.jpeg";
@@ -27,7 +18,7 @@ import doctor6 from "../../assets/teamfolder/06.jpeg";
 import doctor7 from "../../assets/teamfolder/07.jpeg";
 import doctor8 from "../../assets/teamfolder/08.jpeg";
 
-// ─── Team Data (8 members) ────────────────────────────────────────
+// ─── Team Data ────────────────────────────────────────────────────
 const team = [
   { name: "Akansha", role: "Senior Physiotherapist", specialization: "Sports Injuries & Rehabilitation", image: doctor1 },
   { name: "Kanika", role: "Neurological Physiotherapist", specialization: "Neurological & Stroke Rehabilitation", image: doctor2 },
@@ -62,10 +53,96 @@ export default function DoctorsPage() {
   return (
     <div className="bg-white min-h-screen" style={{ fontFamily: "'DM Sans', sans-serif" }}>
 
+      {/* ───────────────── SEO HEAD ───────────────── */}
+      <Helmet>
+        {/* Primary Meta */}
+        <title>Our Physiotherapy Team – PhysioCentric New Delhi | Dr. Divya Sharma & Experts</title>
+        <meta
+          name="description"
+          content="Meet Dr. Divya Sharma and PhysioCentric's team of 8+ expert physiotherapists in New Delhi. Specialists in sports rehab, neurological therapy, orthopaedics, women's health & chronic pain."
+        />
+        <meta name="keywords" content="physiotherapist New Delhi, Dr Divya Sharma physiotherapist, PhysioCentric doctors, physiotherapy team Delhi, sports physio Delhi, neurological physiotherapist Delhi, women's health physio New Delhi, orthopaedic physiotherapist Gulmohar Park" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.physiocentric.in/doctors" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.physiocentric.in/doctors" />
+        <meta property="og:title" content="Meet Our Physiotherapy Experts – PhysioCentric, New Delhi" />
+        <meta property="og:description" content="Dr. Divya Sharma and a team of 8 specialist physiotherapists dedicated to your recovery. Serving New Delhi from Gulmohar Park." />
+        <meta property="og:image" content="https://www.physiocentric.in/og-image.jpg" />
+        <meta property="og:locale" content="en_IN" />
+        <meta property="og:site_name" content="PhysioCentric" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Our Expert Physiotherapy Team – PhysioCentric, New Delhi" />
+        <meta name="twitter:description" content="Meet Dr. Divya Sharma & our 8 specialist physiotherapists at PhysioCentric, New Delhi's top-rated physio clinic." />
+        <meta name="twitter:image" content="https://www.physiocentric.in/og-image.jpg" />
+
+        {/* Structured Data – Team + Physician */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "MedicalBusiness",
+                "name": "PhysioCentric",
+                "url": "https://www.physiocentric.in",
+                "telephone": "+919810513841",
+                "address": {
+                  "@type": "PostalAddress",
+                  "streetAddress": "A-2, Block A, Gulmohar Park",
+                  "addressLocality": "New Delhi",
+                  "addressRegion": "Delhi",
+                  "postalCode": "110049",
+                  "addressCountry": "IN"
+                },
+                "aggregateRating": {
+                  "@type": "AggregateRating",
+                  "ratingValue": "5.0",
+                  "reviewCount": "37",
+                  "bestRating": "5"
+                }
+              },
+              {
+                "@type": "Physician",
+                "name": "Dr. Divya Sharma",
+                "jobTitle": "Chief Physiotherapist & Founder",
+                "description": "Dr. Divya Sharma is the founder and chief physiotherapist at PhysioCentric with over 10 years of clinical experience in orthopaedic and manual therapy.",
+                "worksFor": {
+                  "@type": "MedicalBusiness",
+                  "name": "PhysioCentric",
+                  "url": "https://www.physiocentric.in"
+                },
+                "hasCredential": [
+                  { "@type": "EducationalOccupationalCredential", "credentialCategory": "degree", "name": "BPT – Bachelor of Physiotherapy" },
+                  { "@type": "EducationalOccupationalCredential", "credentialCategory": "degree", "name": "MPT (Orthopaedics) – Master of Physiotherapy" },
+                  { "@type": "EducationalOccupationalCredential", "credentialCategory": "certification", "name": "Certified Manual Therapist" }
+                ],
+                "medicalSpecialty": "PhysicalTherapy",
+                "url": "https://www.physiocentric.in/doctors"
+              },
+              ...team.map((doc) => ({
+                "@type": "Person",
+                "name": doc.name,
+                "jobTitle": doc.role,
+                "description": doc.specialization,
+                "worksFor": {
+                  "@type": "MedicalBusiness",
+                  "name": "PhysioCentric"
+                }
+              }))
+            ]
+          })}
+        </script>
+      </Helmet>
+
       {/* ── HERO ── */}
-      <section className="relative bg-black text-white overflow-hidden mt-8">
+      <section className="relative bg-black text-white overflow-hidden mt-8" aria-label="Team hero section">
         <div
           className="absolute inset-0 opacity-10"
+          aria-hidden="true"
           style={{
             backgroundImage:
               "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
@@ -74,7 +151,7 @@ export default function DoctorsPage() {
         />
         <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-36">
           <div className="max-w-3xl">
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-6" aria-hidden="true">
               <div className="w-12 h-0.5 bg-white opacity-40" />
               <span className="text-xs tracking-widest uppercase text-gray-400 font-semibold">
                 PhysioCentric · New Delhi
@@ -94,11 +171,14 @@ export default function DoctorsPage() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link to="/contacts">
-                <button className="bg-white text-black px-8 py-4 text-xs tracking-widest uppercase font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg">
+                <button
+                  className="bg-white text-black px-8 py-4 text-xs tracking-widest uppercase font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg"
+                  aria-label="Book a physiotherapy appointment"
+                >
                   Book Appointment
                 </button>
               </Link>
-              <a href="tel:+919810513841">
+              <a href="tel:+919810513841" aria-label="Call PhysioCentric at 098105 13841">
                 <button className="border border-white/30 text-white px-8 py-4 text-xs tracking-widest uppercase font-bold hover:border-white transition-all duration-300">
                   098105 13841
                 </button>
@@ -106,22 +186,22 @@ export default function DoctorsPage() {
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-white" style={{ clipPath: "polygon(0 100%, 100% 0, 100% 100%)" }} />
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-white" style={{ clipPath: "polygon(0 100%, 100% 0, 100% 100%)" }} aria-hidden="true" />
       </section>
 
       {/* ── STATS ── */}
-      <section className="bg-white py-16 border-b border-gray-100">
+      <section className="bg-white py-16 border-b border-gray-100" aria-label="Clinic statistics">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((s, i) => (
               <div key={i} className="text-center group">
-                <div className="w-14 h-14 bg-black rounded-sm flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-14 h-14 bg-black rounded-sm flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
                   <s.icon size={22} className="text-white" />
                 </div>
-                <div className="text-4xl font-black text-black mb-1" style={{ fontFamily: "Lexend Peta, sans-serif" }}>
+                <p className="text-4xl font-black text-black mb-1" style={{ fontFamily: "Lexend Peta, sans-serif" }}>
                   {s.number}
-                </div>
-                <div className="text-xs tracking-widest uppercase text-gray-400 font-semibold">{s.label}</div>
+                </p>
+                <p className="text-xs tracking-widest uppercase text-gray-400 font-semibold">{s.label}</p>
               </div>
             ))}
           </div>
@@ -129,10 +209,9 @@ export default function DoctorsPage() {
       </section>
 
       {/* ── HEAD DOCTOR SECTION ── */}
-      <section className="bg-white py-20 md:py-28 border-b border-gray-100">
+      <section className="bg-white py-20 md:py-28 border-b border-gray-100" aria-label="Chief physiotherapist profile">
         <div className="max-w-7xl mx-auto px-6">
-          {/* Label */}
-          <div className="flex items-center gap-3 mb-16">
+          <div className="flex items-center gap-3 mb-16" aria-hidden="true">
             <div className="w-12 h-0.5 bg-black" />
             <span className="text-xs tracking-widest uppercase font-semibold text-black">
               Our Lead Expert
@@ -142,19 +221,22 @@ export default function DoctorsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Left — Image */}
             <div className="relative">
-              {/* Decorative border */}
-              <div className="absolute -bottom-5 -right-5 w-full h-full border-2 border-black z-0" />
+              <div className="absolute -bottom-5 -right-5 w-full h-full border-2 border-black z-0" aria-hidden="true" />
               <div className="relative z-10 overflow-hidden bg-gray-100">
                 <img
                   src={headDoctor}
-                  alt="Dr. Divya Sharma"
+                  alt="Dr. Divya Sharma – Chief Physiotherapist and Founder of PhysioCentric, New Delhi"
                   className="w-full object-contain"
                   style={{ maxHeight: "560px" }}
+                  loading="eager"
+                  fetchpriority="high"
+                  width={560}
+                  height={560}
                 />
               </div>
               {/* Floating badge */}
               <div className="absolute -bottom-4 left-6 z-20 bg-black text-white px-6 py-3 flex items-center gap-3 shadow-xl">
-                <BadgeCheck size={18} className="text-white" />
+                <BadgeCheck size={18} className="text-white" aria-hidden="true" />
                 <div>
                   <div className="text-xs text-gray-400 tracking-widest uppercase">Certified</div>
                   <div className="text-sm font-bold tracking-wide">Chief Physiotherapist</div>
@@ -164,7 +246,6 @@ export default function DoctorsPage() {
 
             {/* Right — Info */}
             <div className="space-y-7 pt-6 lg:pt-0">
-              {/* Name & Title */}
               <div>
                 <p className="text-xs tracking-widest uppercase text-gray-400 font-semibold mb-2">
                   Head of PhysioCentric
@@ -179,15 +260,12 @@ export default function DoctorsPage() {
                 </h2>
               </div>
 
-              {/* Divider */}
-              <div className="w-16 h-0.5 bg-black" />
+              <div className="w-16 h-0.5 bg-black" aria-hidden="true" />
 
-              {/* Bio */}
               <p className="text-gray-600 text-base leading-relaxed">
                 Dr. Divya Sharma is the founder and chief physiotherapist at PhysioCentric,
                 New Delhi. With over a decade of clinical expertise, she leads a team of
-                highly specialized physiotherapists committed to evidence-based, patient-first
-                care.
+                highly specialized physiotherapists committed to evidence-based, patient-first care.
               </p>
               <p className="text-gray-500 text-sm leading-relaxed">
                 Her vision for PhysioCentric is rooted in delivering accessible, expert
@@ -207,7 +285,7 @@ export default function DoctorsPage() {
                   "10+ Years Clinical Experience",
                 ].map((q, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-black rounded-sm flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 bg-black rounded-sm flex items-center justify-center flex-shrink-0" aria-hidden="true">
                       <GraduationCap size={14} className="text-white" />
                     </div>
                     <span className="text-sm text-gray-600">{q}</span>
@@ -215,9 +293,11 @@ export default function DoctorsPage() {
                 ))}
               </div>
 
-              {/* CTA */}
               <Link to="/contacts">
-                <button className="mt-2 bg-black text-white px-8 py-4 text-xs tracking-widest uppercase font-bold hover:bg-gray-800 transition-all duration-300 hover:scale-105 shadow-lg">
+                <button
+                  className="mt-2 bg-black text-white px-8 py-4 text-xs tracking-widest uppercase font-bold hover:bg-gray-800 transition-all duration-300 hover:scale-105 shadow-lg"
+                  aria-label="Book appointment with Dr. Divya Sharma"
+                >
                   Book With Dr. Divya
                 </button>
               </Link>
@@ -227,14 +307,12 @@ export default function DoctorsPage() {
       </section>
 
       {/* ── OUR TEAM ── */}
-      <section className="bg-gray-50 py-20 md:py-28">
+      <section className="bg-gray-50 py-20 md:py-28" aria-label="Physiotherapy team members">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16">
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3 mb-4" aria-hidden="true">
               <div className="w-12 h-0.5 bg-black" />
-              <span className="text-xs tracking-widest uppercase font-semibold text-black">
-                Our Team
-              </span>
+              <span className="text-xs tracking-widest uppercase font-semibold text-black">Our Team</span>
             </div>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               <h2
@@ -255,23 +333,27 @@ export default function DoctorsPage() {
             {team.map((doc, i) => (
               <div
                 key={i}
-                className="group bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer"
+                className="group bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
                 onMouseEnter={() => setHoveredDoc(i)}
                 onMouseLeave={() => setHoveredDoc(null)}
               >
                 <div className="relative overflow-hidden bg-gray-100" style={{ aspectRatio: "3/4" }}>
                   <img
                     src={doc.image}
-                    alt={doc.name}
+                    alt={`${doc.name} – ${doc.role} at PhysioCentric New Delhi`}
                     className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                    width={300}
+                    height={400}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" aria-hidden="true" />
 
                   {/* Hover overlay */}
                   <div
                     className={`absolute bottom-0 left-0 right-0 bg-black/90 px-4 py-3 transition-all duration-500 ${
                       hoveredDoc === i ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
                     }`}
+                    aria-hidden="true"
                   >
                     <p className="text-xs text-gray-300 tracking-widest uppercase">{doc.role}</p>
                     <p className="text-xs text-white mt-1">{doc.specialization}</p>
@@ -289,9 +371,9 @@ export default function DoctorsPage() {
       </section>
 
       {/* ── SPECIALIZATIONS ── */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="bg-white py-20 md:py-28" aria-label="Areas of specialization">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-3 mb-4" aria-hidden="true">
             <div className="w-12 h-0.5 bg-black" />
             <span className="text-xs tracking-widest uppercase font-semibold text-black">What We Treat</span>
           </div>
@@ -305,9 +387,9 @@ export default function DoctorsPage() {
             {specializations.map((sp, i) => (
               <div
                 key={i}
-                className="group border border-gray-100 p-7 hover:bg-black hover:border-black transition-all duration-300 cursor-pointer"
+                className="group border border-gray-100 p-7 hover:bg-black hover:border-black transition-all duration-300"
               >
-                <div className="w-12 h-12 bg-black group-hover:bg-white rounded-sm flex items-center justify-center mb-5 transition-colors duration-300">
+                <div className="w-12 h-12 bg-black group-hover:bg-white rounded-sm flex items-center justify-center mb-5 transition-colors duration-300" aria-hidden="true">
                   <sp.icon size={20} className="text-white group-hover:text-black transition-colors duration-300" />
                 </div>
                 <h3 className="text-base font-bold text-black group-hover:text-white mb-3 transition-colors duration-300">
@@ -323,11 +405,11 @@ export default function DoctorsPage() {
       </section>
 
       {/* ── VISIT US ── */}
-      <section className="bg-black text-white py-20">
+      <section className="bg-black text-white py-20" aria-label="Visit PhysioCentric">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-6" aria-hidden="true">
                 <div className="w-10 h-0.5 bg-white opacity-40" />
                 <span className="text-xs tracking-widest uppercase text-gray-400 font-semibold">Find Us</span>
               </div>
@@ -339,33 +421,33 @@ export default function DoctorsPage() {
               </h2>
               <div className="space-y-5">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 border border-white/20 flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 border border-white/20 flex items-center justify-center flex-shrink-0" aria-hidden="true">
                     <MapPin size={16} className="text-white" />
                   </div>
                   <div>
-                    <div className="text-xs text-gray-400 tracking-widest uppercase mb-1">Address</div>
-                    <p className="text-gray-300 text-sm leading-relaxed">
+                    <p className="text-xs text-gray-400 tracking-widest uppercase mb-1">Address</p>
+                    <address className="text-gray-300 text-sm leading-relaxed not-italic">
                       A-2, Block A, Gulmohar Park,<br />New Delhi, Delhi 110049
-                    </p>
+                    </address>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 border border-white/20 flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 border border-white/20 flex items-center justify-center flex-shrink-0" aria-hidden="true">
                     <Phone size={16} className="text-white" />
                   </div>
                   <div>
-                    <div className="text-xs text-gray-400 tracking-widest uppercase mb-1">Phone</div>
-                    <a href="tel:+919810513841" className="text-gray-300 hover:text-white transition-colors text-sm">
+                    <p className="text-xs text-gray-400 tracking-widest uppercase mb-1">Phone</p>
+                    <a href="tel:+919810513841" className="text-gray-300 hover:text-white transition-colors text-sm" aria-label="Call PhysioCentric">
                       098105 13841
                     </a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 border border-white/20 flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 border border-white/20 flex items-center justify-center flex-shrink-0" aria-hidden="true">
                     <Clock size={16} className="text-white" />
                   </div>
                   <div>
-                    <div className="text-xs text-gray-400 tracking-widest uppercase mb-1">Hours</div>
+                    <p className="text-xs text-gray-400 tracking-widest uppercase mb-1">Hours</p>
                     <p className="text-gray-300 text-sm">Mon – Sat: 9:00 AM – 7:00 PM</p>
                   </div>
                 </div>
@@ -373,9 +455,9 @@ export default function DoctorsPage() {
             </div>
 
             <div className="border border-white/10 p-10 text-center">
-              <div className="flex justify-center mb-3">
+              <div className="flex justify-center mb-3" aria-label="5 out of 5 stars rating">
                 {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" viewBox="0 0 20 20">
+                  <svg key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" viewBox="0 0 20 20" aria-hidden="true">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
                 ))}
@@ -386,7 +468,7 @@ export default function DoctorsPage() {
               </p>
               <Link to="/contacts">
                 <button className="w-full bg-white text-black py-4 text-xs tracking-widest uppercase font-bold hover:bg-gray-100 transition-all duration-300 flex items-center justify-center gap-2">
-                  Book Appointment <ChevronRight size={16} />
+                  Book Appointment <ChevronRight size={16} aria-hidden="true" />
                 </button>
               </Link>
             </div>

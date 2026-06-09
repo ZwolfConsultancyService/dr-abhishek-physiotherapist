@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Download, Phone, Mail, ChevronRight, Home } from "lucide-react";
 import { servicesDetailData } from "../../../data/servicesData/servicesData";
 import LocationsSlider from "../Locationdetailpage/LocationsSlider";
@@ -31,12 +32,12 @@ const ServiceDetailPage = () => {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <div className="relative w-20 h-20 mx-auto mb-6">
+          <div className="relative w-20 h-20 mx-auto mb-6" aria-hidden="true">
             <div className="absolute inset-0 border-4 border-gray-100 rounded-full"></div>
             <div className="absolute inset-0 border-4 border-transparent border-t-black rounded-full animate-spin"></div>
             <div className="absolute inset-4 bg-black rounded-full animate-pulse"></div>
           </div>
-          <p className="text-xs tracking-widest uppercase text-gray-400">
+          <p className="text-xs tracking-widest uppercase text-gray-400" aria-live="polite">
             Loading...
           </p>
         </div>
@@ -44,51 +45,187 @@ const ServiceDetailPage = () => {
     );
   }
 
+  // Build canonical URL from current slug
+  const canonicalUrl = `https://www.physiocentric.in/service/${slug}`;
+
+  // Structured Data for this individual service
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "MedicalWebPage",
+        "url": canonicalUrl,
+        "name": `${serviceData.title} – PhysioCentric New Delhi`,
+        "description": serviceData.description,
+        "inLanguage": "en-IN",
+        "about": {
+          "@type": "MedicalTherapy",
+          "name": serviceData.title,
+          "description": serviceData.longDescription || serviceData.description,
+          "relevantSpecialty": "PhysicalTherapy"
+        },
+        "provider": {
+          "@type": "MedicalBusiness",
+          "name": "PhysioCentric",
+          "url": "https://www.physiocentric.in",
+          "telephone": "+919810513841",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "A-2, Block A, Gulmohar Park",
+            "addressLocality": "New Delhi",
+            "addressRegion": "Delhi",
+            "postalCode": "110049",
+            "addressCountry": "IN"
+          }
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.physiocentric.in"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Services",
+            "item": "https://www.physiocentric.in/services"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": serviceData.title,
+            "item": canonicalUrl
+          }
+        ]
+      },
+      // FAQ schema from accordion "Why Choose Us" points
+      ...(serviceData.whyChoose?.points?.length > 0
+        ? [{
+            "@type": "FAQPage",
+            "mainEntity": serviceData.whyChoose.points.map((item) => ({
+              "@type": "Question",
+              "name": item.title,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": item.description
+              }
+            }))
+          }]
+        : [])
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 mt-10">
-      {/* Banner */}
+
+      {/* ───────────────── SEO HEAD ───────────────── */}
+      <Helmet>
+        {/* Primary Meta */}
+        <title>{`${serviceData.title} in New Delhi – PhysioCentric | Expert Physiotherapy`}</title>
+        <meta
+          name="description"
+          content={`${serviceData.description?.substring(0, 150)}... Book a session at PhysioCentric, Gulmohar Park, New Delhi. Call 09810513841.`}
+        />
+        <meta
+          name="keywords"
+          content={`${serviceData.title} Delhi, ${serviceData.title} physiotherapy New Delhi, ${serviceData.title} treatment Gulmohar Park, PhysioCentric ${serviceData.title}`}
+        />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={canonicalUrl} />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content={`${serviceData.title} – PhysioCentric, New Delhi`} />
+        <meta
+          property="og:description"
+          content={`${serviceData.description?.substring(0, 150)}... Expert physiotherapy at PhysioCentric, New Delhi.`}
+        />
+        <meta property="og:image" content={serviceData.mainImage || "https://www.physiocentric.in/og-image.jpg"} />
+        <meta property="og:locale" content="en_IN" />
+        <meta property="og:site_name" content="PhysioCentric" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${serviceData.title} – PhysioCentric, New Delhi`} />
+        <meta
+          name="twitter:description"
+          content={`${serviceData.description?.substring(0, 150)}... Expert physiotherapy in Gulmohar Park, New Delhi.`}
+        />
+        <meta name="twitter:image" content={serviceData.mainImage || "https://www.physiocentric.in/og-image.jpg"} />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+
+      {/* ───────────────── BANNER ───────────────── */}
       <div
         className="relative h-[240px] md:h-[300px] bg-cover bg-center"
         style={{ backgroundImage: `url('${serviceData.bannerImage}')` }}
       >
-        <div className="absolute inset-0 bg-black/70"></div>
+        <div className="absolute inset-0 bg-black/70" aria-hidden="true"></div>
         <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center max-w-7xl">
           <h1 className="text-3xl md:text-5xl mt-16 md:mt-20 text-white mb-4 font-bold tracking-tight">
             {serviceData.title}
           </h1>
-          <nav className="flex items-center gap-2 text-white/60 text-sm">
-            <button
-              onClick={() => navigate("/")}
-              className="hover:text-white transition-colors flex items-center gap-1"
-            >
-              <Home className="w-4 h-4" /> Home
-            </button>
-            <span>/</span>
-            <span className="text-white">{serviceData.title}</span>
+          <nav aria-label="Breadcrumb">
+            <ol className="flex items-center gap-2 text-white/60 text-sm list-none p-0 m-0">
+              <li>
+                <button
+                  onClick={() => navigate("/")}
+                  className="hover:text-white transition-colors flex items-center gap-1"
+                >
+                  <Home className="w-4 h-4" aria-hidden="true" /> Home
+                </button>
+              </li>
+              <li aria-hidden="true"><span>/</span></li>
+              <li>
+                <button
+                  onClick={() => navigate("/services")}
+                  className="hover:text-white transition-colors"
+                >
+                  Services
+                </button>
+              </li>
+              <li aria-hidden="true"><span>/</span></li>
+              <li>
+                <span className="text-white" aria-current="page">{serviceData.title}</span>
+              </li>
+            </ol>
           </nav>
         </div>
       </div>
 
-      {/* Main Content */}
-      <section className="py-8 md:py-16">
+      {/* ───────────────── MAIN CONTENT ───────────────── */}
+      <section className="py-8 md:py-16" aria-label={`${serviceData.title} service details`}>
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-            {/* ── Image + Content (mobile pe pehle) ── */}
+            {/* ── Main Content ── */}
             <main className="lg:col-span-9 order-1 lg:order-2 space-y-6 md:space-y-8">
 
               {/* Main Image */}
               <div className="bg-white shadow-lg overflow-hidden">
                 <img
                   src={serviceData.mainImage}
-                  alt={serviceData.title}
+                  alt={`${serviceData.title} treatment at PhysioCentric, New Delhi`}
                   className="w-full h-[220px] sm:h-[320px] md:h-[400px] object-cover"
+                  loading="eager"
+                  fetchpriority="high"
+                  width={900}
+                  height={400}
                 />
               </div>
 
               {/* Description */}
               <div className="bg-white shadow-lg p-6 md:p-8">
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-4" aria-hidden="true">
                   <div className="w-10 h-0.5 bg-black"></div>
                   <span className="text-xs tracking-widest uppercase font-semibold text-black">
                     Overview
@@ -111,12 +248,15 @@ const ServiceDetailPage = () => {
                   <div className="h-[220px] md:h-full">
                     <img
                       src={serviceData.benefitImage}
-                      alt="Benefits"
+                      alt={`Benefits of ${serviceData.title} at PhysioCentric`}
                       className="w-full h-full object-cover"
+                      loading="lazy"
+                      width={450}
+                      height={400}
                     />
                   </div>
                   <div className="p-6 md:p-8">
-                    <div className="flex items-center gap-3 mb-4">
+                    <div className="flex items-center gap-3 mb-4" aria-hidden="true">
                       <div className="w-8 h-0.5 bg-black"></div>
                       <span className="text-xs tracking-widest uppercase font-semibold text-black">
                         Benefits
@@ -131,7 +271,7 @@ const ServiceDetailPage = () => {
                     <ul className="space-y-3">
                       {serviceData.benefits.points.map((point, index) => (
                         <li key={index} className="flex items-start gap-3">
-                          <div className="w-5 h-5 bg-black flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <div className="w-5 h-5 bg-black flex items-center justify-center flex-shrink-0 mt-0.5" aria-hidden="true">
                             <ChevronRight className="w-3 h-3 text-white" />
                           </div>
                           <span className="text-gray-600 text-sm">{point}</span>
@@ -142,9 +282,9 @@ const ServiceDetailPage = () => {
                 </div>
               </div>
 
-              {/* Why Choose Us - Accordion */}
+              {/* Why Choose Us — Accordion (FAQ Schema compatible) */}
               <div className="bg-white shadow-lg p-6 md:p-8">
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-4" aria-hidden="true">
                   <div className="w-10 h-0.5 bg-black"></div>
                   <span className="text-xs tracking-widest uppercase font-semibold text-black">
                     Why Choose Us
@@ -158,22 +298,22 @@ const ServiceDetailPage = () => {
                     <div
                       key={index}
                       className={`border-2 overflow-hidden transition-all duration-300 ${
-                        expandedIndex === index
-                          ? "border-black"
-                          : "border-gray-100"
+                        expandedIndex === index ? "border-black" : "border-gray-100"
                       }`}
                     >
                       <button
                         onClick={() => toggleAccordion(index)}
                         className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
+                        aria-expanded={expandedIndex === index}
+                        aria-controls={`accordion-body-${index}`}
+                        id={`accordion-header-${index}`}
                       >
                         <div className="flex items-center gap-3">
                           <span
                             className={`text-2xl font-light transition-colors ${
-                              expandedIndex === index
-                                ? "text-black"
-                                : "text-gray-300"
+                              expandedIndex === index ? "text-black" : "text-gray-300"
                             }`}
+                            aria-hidden="true"
                           >
                             {expandedIndex === index ? "−" : "+"}
                           </span>
@@ -183,6 +323,9 @@ const ServiceDetailPage = () => {
                         </div>
                       </button>
                       <div
+                        id={`accordion-body-${index}`}
+                        role="region"
+                        aria-labelledby={`accordion-header-${index}`}
                         className={`transition-all duration-300 overflow-hidden ${
                           expandedIndex === index ? "max-h-48" : "max-h-0"
                         }`}
@@ -198,7 +341,7 @@ const ServiceDetailPage = () => {
 
               {/* CTA */}
               <div className="bg-black shadow-lg p-8 text-white text-center">
-                <div className="w-12 h-0.5 bg-white/30 mx-auto mb-6"></div>
+                <div className="w-12 h-0.5 bg-white/30 mx-auto mb-6" aria-hidden="true"></div>
                 <h3 className="text-2xl font-bold mb-4 tracking-tight">
                   Visit Today
                 </h3>
@@ -206,7 +349,7 @@ const ServiceDetailPage = () => {
                   You'll know the minute you arrive this is the place. We are
                   here to surpass your desires.
                 </p>
-                <a href="/contacts">
+                <a href="/contacts" aria-label={`Book an appointment for ${serviceData.title}`}>
                   <button className="px-8 py-3 border border-white/30 text-white text-xs tracking-widest uppercase font-semibold hover:bg-white/10 transition-all duration-300">
                     Make Appointment
                   </button>
@@ -214,23 +357,24 @@ const ServiceDetailPage = () => {
               </div>
             </main>
 
-            {/* ── Sidebar (mobile pe niche) ── */}
-            <aside className="lg:col-span-3 order-2 lg:order-1">
+            {/* ── Sidebar ── */}
+            <aside className="lg:col-span-3 order-2 lg:order-1" aria-label="Services navigation and contact">
               <div className="bg-white shadow-lg overflow-hidden lg:sticky lg:top-8">
 
                 {/* Sidebar Header */}
                 <div className="bg-black text-white px-6 py-4">
-                  <h3 className="text-lg font-bold tracking-widest uppercase">
+                  <p className="text-lg font-bold tracking-widest uppercase">
                     PhysioCentric
-                  </h3>
+                  </p>
                 </div>
 
                 {/* Services Nav */}
-                <nav className="py-2">
+                <nav aria-label="Other physiotherapy services">
                   {serviceData.sidebar.services.map((service, index) => (
                     <button
                       key={index}
                       onClick={() => handleSidebarClick(service)}
+                      aria-current={service === serviceData.title ? "page" : undefined}
                       className={`w-full text-left px-6 py-3 transition-colors border-b border-gray-100 text-sm group flex items-center justify-between ${
                         service === serviceData.title
                           ? "bg-black text-white"
@@ -238,15 +382,18 @@ const ServiceDetailPage = () => {
                       }`}
                     >
                       <span>{service}</span>
-                      <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                     </button>
                   ))}
                 </nav>
 
                 {/* Download Brochure */}
                 <div className="p-6 bg-gray-900">
-                  <button className="w-full flex items-center justify-center gap-2 bg-white text-black px-6 py-3 text-xs tracking-widest uppercase font-semibold hover:bg-gray-100 transition-all duration-300">
-                    <Download className="w-5 h-5" />
+                  <button
+                    className="w-full flex items-center justify-center gap-2 bg-white text-black px-6 py-3 text-xs tracking-widest uppercase font-semibold hover:bg-gray-100 transition-all duration-300"
+                    aria-label="Download PhysioCentric services brochure"
+                  >
+                    <Download className="w-5 h-5" aria-hidden="true" />
                     Download Brochure
                   </button>
                 </div>
@@ -254,29 +401,37 @@ const ServiceDetailPage = () => {
                 {/* Contact Info */}
                 <div className="p-6 space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-black flex items-center justify-center flex-shrink-0">
+                    <div className="w-9 h-9 bg-black flex items-center justify-center flex-shrink-0" aria-hidden="true">
                       <Phone className="w-4 h-4 text-white" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-400 tracking-widest uppercase">
                         Call Us
                       </p>
-                      <p className="text-black font-medium text-sm">
-                        1800-456-7890
-                      </p>
+                      <a
+                        href="tel:09810513841"
+                        className="text-black font-medium text-sm hover:underline"
+                        aria-label="Call PhysioCentric at 09810513841"
+                      >
+                        09810513841
+                      </a>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-black flex items-center justify-center flex-shrink-0">
+                    <div className="w-9 h-9 bg-black flex items-center justify-center flex-shrink-0" aria-hidden="true">
                       <Mail className="w-4 h-4 text-white" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-400 tracking-widest uppercase">
                         Email
                       </p>
-                      <p className="text-black font-medium text-sm">
+                      <a
+                        href="mailto:reception.physiocentric@gmail.com"
+                        className="text-black font-medium text-sm hover:underline"
+                        aria-label="Email PhysioCentric"
+                      >
                         reception.physiocentric@gmail.com
-                      </p>
+                      </a>
                     </div>
                   </div>
                 </div>

@@ -1,6 +1,7 @@
 // BlogPage.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Search, Calendar, Home, ChevronRight } from "lucide-react";
 
 const API_BASE_URL = "https://dr-abhishek-physiotherapist-backend.onrender.com/api";
@@ -75,12 +76,12 @@ const BlogPage = () => {
   if (loading) return (
     <div className="min-h-screen bg-white flex items-center justify-center mt-12">
       <div className="text-center">
-        <div className="relative w-20 h-20 mx-auto mb-6">
+        <div className="relative w-20 h-20 mx-auto mb-6" aria-hidden="true">
           <div className="absolute inset-0 border-4 border-gray-100 rounded-full"></div>
           <div className="absolute inset-0 border-4 border-transparent border-t-black rounded-full animate-spin"></div>
           <div className="absolute inset-4 bg-black rounded-full animate-pulse"></div>
         </div>
-        <p className="text-xs tracking-widest uppercase text-gray-400">Loading blogs...</p>
+        <p className="text-xs tracking-widest uppercase text-gray-400" aria-live="polite">Loading blogs...</p>
       </div>
     </div>
   );
@@ -100,26 +101,79 @@ const BlogPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 mt-10">
 
-      {/* Banner */}
+      {/* ───────────────── SEO HEAD ───────────────── */}
+      <Helmet>
+        {/* Primary Meta */}
+        <title>Physiotherapy Blog & Articles – PhysioCentric New Delhi | Health Tips & Guides</title>
+        <meta
+          name="description"
+          content="Read expert physiotherapy articles, health tips, and patient guides from PhysioCentric, New Delhi. Topics include back pain, sports injuries, posture, joint health & recovery advice."
+        />
+        <meta name="keywords" content="physiotherapy blog Delhi, back pain tips, sports injury recovery, physiotherapy health articles, joint pain advice, posture correction tips, PhysioCentric blog New Delhi" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.physiocentric.in/blogs" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.physiocentric.in/blogs" />
+        <meta property="og:title" content="Physiotherapy Blog – PhysioCentric, New Delhi" />
+        <meta property="og:description" content="Expert physiotherapy articles and health guides from PhysioCentric. Learn about pain management, injury recovery, and wellness tips." />
+        <meta property="og:image" content="https://www.physiocentric.in/og-image.jpg" />
+        <meta property="og:locale" content="en_IN" />
+        <meta property="og:site_name" content="PhysioCentric" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Physiotherapy Blog & Health Tips – PhysioCentric, New Delhi" />
+        <meta name="twitter:description" content="Expert health articles on physiotherapy, pain relief, and injury recovery from New Delhi's top-rated physio clinic." />
+        <meta name="twitter:image" content="https://www.physiocentric.in/og-image.jpg" />
+
+        {/* Structured Data – Blog */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            "url": "https://www.physiocentric.in/blogs",
+            "name": "PhysioCentric Blog – Physiotherapy Health Tips & Guides",
+            "description": "Expert physiotherapy articles, recovery guides, and health tips from PhysioCentric, New Delhi.",
+            "inLanguage": "en-IN",
+            "publisher": {
+              "@type": "MedicalBusiness",
+              "name": "PhysioCentric",
+              "url": "https://www.physiocentric.in",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.physiocentric.in/logo.png"
+              }
+            }
+          })}
+        </script>
+      </Helmet>
+
+      {/* ───────────────── BANNER ───────────────── */}
       <div className="relative h-[240px] md:h-[300px] bg-black">
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black opacity-90" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black opacity-90" aria-hidden="true" />
         <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center max-w-7xl">
           <h1 className="text-3xl md:text-5xl mt-16 text-white mb-4 font-bold tracking-tight">
-            Blogs & Articles
+            Blogs &amp; Articles
           </h1>
-          <nav className="flex items-center gap-2 text-white/60 text-sm">
-            <button onClick={() => navigate("/")}
-              className="hover:text-white transition-colors flex items-center gap-1">
-              <Home className="w-4 h-4" /> Home
-            </button>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-white">Blogs</span>
+          <nav aria-label="Breadcrumb">
+            <ol className="flex items-center gap-2 text-white/60 text-sm list-none p-0 m-0">
+              <li>
+                <button onClick={() => navigate("/")}
+                  className="hover:text-white transition-colors flex items-center gap-1">
+                  <Home className="w-4 h-4" aria-hidden="true" /> Home
+                </button>
+              </li>
+              <li aria-hidden="true"><ChevronRight className="w-3 h-3" /></li>
+              <li><span className="text-white" aria-current="page">Blogs</span></li>
+            </ol>
           </nav>
         </div>
       </div>
 
-      {/* Main */}
-      <section className="py-10 md:py-16">
+      {/* ───────────────── MAIN ───────────────── */}
+      <section className="py-10 md:py-16" aria-label="Blog articles">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
@@ -128,11 +182,16 @@ const BlogPage = () => {
 
               {/* Search - mobile only */}
               <div className="relative mb-6 lg:hidden">
-                <input type="text" placeholder="Search blogs..."
+                <label htmlFor="blog-search-mobile" className="sr-only">Search blogs</label>
+                <input
+                  id="blog-search-mobile"
+                  type="search"
+                  placeholder="Search blogs..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-200 focus:border-black focus:outline-none text-sm" />
-                <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  className="w-full px-4 py-3 border-2 border-gray-200 focus:border-black focus:outline-none text-sm"
+                />
+                <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
               </div>
 
               {filtered.length === 0 ? (
@@ -146,24 +205,31 @@ const BlogPage = () => {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {filtered.map((blog) => (
-                    <div key={blog._id || blog.id}
+                    <article
+                      key={blog._id || blog.id}
                       className="bg-white shadow-lg group cursor-pointer hover:shadow-xl transition-shadow duration-300"
-                      onClick={() => navigate(`/blogs/${getSlug(blog)}`)}>
-
+                      onClick={() => navigate(`/blogs/${getSlug(blog)}`)}
+                    >
                       {/* Image */}
                       <div className="overflow-hidden h-[200px]">
-                        <img src={getImageUrl(blog)} alt={blog.title}
+                        <img
+                          src={getImageUrl(blog)}
+                          alt={`${blog.title} – PhysioCentric physiotherapy article`}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                          width={400}
+                          height={200}
                           onError={(e) => {
                             e.target.src = "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d";
-                          }} />
+                          }}
+                        />
                       </div>
 
                       {/* Content */}
                       <div className="p-5">
                         {/* Tags */}
                         {blog.tags?.length > 0 && (
-                          <div className="flex flex-wrap gap-2 mb-3">
+                          <div className="flex flex-wrap gap-2 mb-3" aria-label="Blog tags">
                             {blog.tags.slice(0, 2).map((tag, i) => (
                               <span key={i}
                                 className="text-xs px-2 py-1 bg-gray-100 text-gray-500 tracking-wide capitalize">
@@ -187,65 +253,76 @@ const BlogPage = () => {
 
                         {/* Footer */}
                         <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                          <span className="text-xs text-gray-400 flex items-center gap-1">
-                            <Calendar className="w-3 h-3" />
+                          <time
+                            dateTime={new Date(blog.createdAt || Date.now()).toISOString()}
+                            className="text-xs text-gray-400 flex items-center gap-1"
+                          >
+                            <Calendar className="w-3 h-3" aria-hidden="true" />
                             {new Date(blog.createdAt || Date.now()).toLocaleDateString("en-US", {
                               year: "numeric", month: "short", day: "numeric",
                             })}
-                          </span>
+                          </time>
                           <button
                             className="text-xs tracking-widest uppercase font-semibold text-black flex items-center gap-1 hover:gap-2 transition-all"
+                            aria-label={`Read full article: ${blog.title}`}
                             onClick={(e) => {
                               e.stopPropagation();
                               navigate(`/blogs/${getSlug(blog)}`);
                             }}>
-                            Read <ChevronRight className="w-3 h-3" />
+                            Read <ChevronRight className="w-3 h-3" aria-hidden="true" />
                           </button>
                         </div>
                       </div>
-                    </div>
+                    </article>
                   ))}
                 </div>
               )}
             </main>
 
             {/* Sidebar */}
-            <aside className="lg:col-span-4 order-1 lg:order-2">
+            <aside className="lg:col-span-4 order-1 lg:order-2" aria-label="Blog filters and recent posts">
               <div className="space-y-6 lg:sticky lg:top-8">
 
                 {/* Search - desktop */}
                 <div className="bg-white shadow-lg p-6 hidden lg:block">
-                  <h3 className="text-xs tracking-widest uppercase font-semibold text-black mb-4">
+                  <h2 className="text-xs tracking-widest uppercase font-semibold text-black mb-4">
                     Search
-                  </h3>
+                  </h2>
                   <div className="relative">
-                    <input type="text" placeholder="Search blogs..."
+                    <label htmlFor="blog-search-desktop" className="sr-only">Search blogs</label>
+                    <input
+                      id="blog-search-desktop"
+                      type="search"
+                      placeholder="Search blogs..."
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      className="w-full px-4 py-3 border-2 border-gray-200 focus:border-black focus:outline-none text-sm" />
-                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      className="w-full px-4 py-3 border-2 border-gray-200 focus:border-black focus:outline-none text-sm"
+                    />
+                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
                   </div>
                 </div>
 
                 {/* Categories */}
                 {categories.length > 0 && (
                   <div className="bg-white shadow-lg p-6">
-                    <h3 className="text-xs tracking-widest uppercase font-semibold text-black mb-4 pb-3 border-b border-gray-100">
+                    <h2 className="text-xs tracking-widest uppercase font-semibold text-black mb-4 pb-3 border-b border-gray-100">
                       Categories
-                    </h3>
+                    </h2>
                     <ul className="space-y-2">
                       <li>
                         <button onClick={() => setActiveTag("")}
                           className={`text-sm w-full text-left flex items-center gap-2 py-1 transition-colors ${activeTag === "" ? "text-black font-semibold" : "text-gray-500 hover:text-black"}`}>
-                          <span className="w-1.5 h-1.5 bg-black rounded-full flex-shrink-0"></span>
+                          <span className="w-1.5 h-1.5 bg-black rounded-full flex-shrink-0" aria-hidden="true"></span>
                           All Categories
                         </button>
                       </li>
                       {categories.map((cat, i) => (
                         <li key={i}>
                           <button onClick={() => setActiveTag(cat)}
-                            className={`text-sm w-full text-left flex items-center gap-2 py-1 transition-colors capitalize ${activeTag === cat ? "text-black font-semibold" : "text-gray-500 hover:text-black"}`}>
-                            <span className="w-1.5 h-1.5 bg-black rounded-full flex-shrink-0"></span>
+                            className={`text-sm w-full text-left flex items-center gap-2 py-1 transition-colors capitalize ${activeTag === cat ? "text-black font-semibold" : "text-gray-500 hover:text-black"}`}
+                            aria-pressed={activeTag === cat}
+                          >
+                            <span className="w-1.5 h-1.5 bg-black rounded-full flex-shrink-0" aria-hidden="true"></span>
                             {cat}
                           </button>
                         </li>
@@ -257,13 +334,14 @@ const BlogPage = () => {
                 {/* Tags */}
                 {tags.length > 0 && (
                   <div className="bg-white shadow-lg p-6">
-                    <h3 className="text-xs tracking-widest uppercase font-semibold text-black mb-4 pb-3 border-b border-gray-100">
+                    <h2 className="text-xs tracking-widest uppercase font-semibold text-black mb-4 pb-3 border-b border-gray-100">
                       Tags
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
+                    </h2>
+                    <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by tag">
                       {tags.map((tag, i) => (
                         <button key={i}
                           onClick={() => setActiveTag(activeTag === tag ? "" : tag)}
+                          aria-pressed={activeTag === tag}
                           className={`px-3 py-1.5 text-xs capitalize tracking-wide border transition-all duration-300 ${activeTag === tag
                             ? "bg-black text-white border-black"
                             : "border-gray-200 text-gray-500 hover:bg-black hover:text-white hover:border-black"}`}>
@@ -276,31 +354,40 @@ const BlogPage = () => {
 
                 {/* Recent Posts */}
                 <div className="bg-white shadow-lg p-6">
-                  <h3 className="text-xs tracking-widest uppercase font-semibold text-black mb-4 pb-3 border-b border-gray-100">
+                  <h2 className="text-xs tracking-widest uppercase font-semibold text-black mb-4 pb-3 border-b border-gray-100">
                     Recent Posts
-                  </h3>
+                  </h2>
                   <div className="space-y-4">
                     {blogs.slice(0, 4).map((blog, i) => (
                       <div key={i}
                         className="flex gap-3 group cursor-pointer"
                         onClick={() => navigate(`/blogs/${getSlug(blog)}`)}>
                         <div className="w-16 h-16 flex-shrink-0 overflow-hidden bg-gray-100">
-                          <img src={getImageUrl(blog)} alt={blog.title}
+                          <img
+                            src={getImageUrl(blog)}
+                            alt={blog.title}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            loading="lazy"
+                            width={64}
+                            height={64}
                             onError={(e) => {
                               e.target.src = "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d";
-                            }} />
+                            }}
+                          />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-xs font-semibold text-black group-hover:text-gray-500 transition-colors line-clamp-2 mb-1">
+                          <h3 className="text-xs font-semibold text-black group-hover:text-gray-500 transition-colors line-clamp-2 mb-1">
                             {blog.title}
-                          </h4>
-                          <p className="text-xs text-gray-400 flex items-center gap-1">
-                            <Calendar className="w-3 h-3 flex-shrink-0" />
+                          </h3>
+                          <time
+                            dateTime={new Date(blog.createdAt || Date.now()).toISOString()}
+                            className="text-xs text-gray-400 flex items-center gap-1"
+                          >
+                            <Calendar className="w-3 h-3 flex-shrink-0" aria-hidden="true" />
                             {new Date(blog.createdAt || Date.now()).toLocaleDateString("en-US", {
                               month: "short", day: "numeric", year: "numeric",
                             })}
-                          </p>
+                          </time>
                         </div>
                       </div>
                     ))}
