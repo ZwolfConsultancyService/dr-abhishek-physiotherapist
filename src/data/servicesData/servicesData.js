@@ -5,27 +5,28 @@ import Kinesiotaping from '../../assets/services/2.jpeg'
 import dry from '../../assets/services/dry.jpeg'
 import muscle from '../../assets/services/4.jpeg'
 import cupping from '../../assets/services/cupping.jpeg'
-import iastm from '../../assets/services/6.jpeg'
+import iastm from '../../assets/services/iastm.jpeg'
 import tens from '../../assets/services/tens.jpeg'
-import Ultrasonic from '../../assets/services/8.jpeg'
+import Ultrasonic from '../../assets/services/Ultrasonic.jpeg'
 import Interferential from '../../assets/services/Interferential.jpeg'
 import laser from '../../assets/services/laser.jpeg'
 import Operative from '../../assets/services/11.jpeg'
 import posture from '../../assets/services/12.jpeg'
 import tele from '../../assets/services/tele.jpeg'
-import biomechanical from '../../assets/services/biomechanical.jpeg'
-import movement from '../../assets/services/movement.jpeg'
+import biomechanical from '../../assets/services/Correction.jpeg'
+import movement from '../../assets/services/8.jpeg'
 import functional from '../../assets/services/functional.jpeg'
 import Natal from '../../assets/services/Natal.jpeg'
 import urinary from '../../assets/services/urinary.jpeg'
 import pelvic from '../../assets/services/pelvic.jpeg'
-import gait from '../../assets/services/gait.jpeg'
+import gait from '../../assets/services/12.jpeg'
 import joint from '../../assets/services/joint.jpeg'
 import pressure from '../../assets/services/pressure.jpeg'
 import massage from '../../assets/services/massage.jpeg'
 import balance from '../../assets/services/balance.jpeg'
 import head from '../../assets/teamfolder/head.jpeg'
 import aboutsection from '../../assets/aboutsection.png'
+import tap from '../../assets/services/tap.jpeg'
 
 
 //massage
@@ -42,7 +43,7 @@ export const servicesData = [
     id: 2,
     title: "Kinesiotaping",
     slug: "kinesiotaping",
-    image: Kinesiotaping,
+    image: tap,
     description: "Professional kinesiotaping therapy for pain relief, muscle support, and injury recovery. Trusted by athletes and patients across Defence Colony, DLF, and Hauz Khas.",
   },
   {
@@ -56,7 +57,7 @@ export const servicesData = [
     id: 4,
     title: "Muscle Stimulation",
     slug: "muscle-stimulation",
-    image: muscle,
+    image: Kinesiotaping,
     description: "Advanced electrical muscle stimulation therapy to rebuild strength, reduce atrophy, and accelerate recovery after injury or surgery in South Delhi and Gurgaon.",
   },
   {
@@ -101,27 +102,27 @@ export const servicesData = [
     image: laser,
     description: "High-intensity LASER therapy for rapid pain relief, tissue regeneration, and inflammation control. A safe, proven, drug-free treatment option for acute and chronic conditions.",
   },
-  {
-    id: 11,
-    title: "Pre & Post Operative Rehab",
-    slug: "pre-post-operative-rehab",
-    image: Operative,
-    description: "Structured pre-surgical conditioning and post-operative rehabilitation programs to speed recovery, restore strength, and get you back to daily life safely and confidently.",
-  },
+  // {
+  //   id: 11,
+  //   title: "Pre & Post Operative Rehab",
+  //   slug: "pre-post-operative-rehab",
+  //   image: Operative,
+  //   description: "Structured pre-surgical conditioning and post-operative rehabilitation programs to speed recovery, restore strength, and get you back to daily life safely and confidently.",
+  // },
   {
     id: 12,
     title: "Sports Injury Rehab",
     slug: "sports-injury-rehab",
-    image: "https://i.pinimg.com/1200x/03/da/11/03da1154f58d46e605069c0a1b215595.jpg",
+    image: muscle,
     description: "Comprehensive sports injury rehabilitation for athletes in Delhi and Gurgaon. From ligament tears to fractures, we help you recover faster and return to peak performance.",
   },
-  {
-    id: 13,
-    title: "Posture Correction Training",
-    slug: "posture-correction-training",
-    image: posture,
-    description: "Science-based posture correction therapy to fix forward head posture, rounded shoulders, and spinal misalignment. Reduce chronic neck and back pain caused by poor posture.",
-  },
+  // {
+  //   id: 13,
+  //   title: "Posture Correction Training",
+  //   slug: "posture-correction-training",
+  //   image: posture,
+  //   description: "Science-based posture correction therapy to fix forward head posture, rounded shoulders, and spinal misalignment. Reduce chronic neck and back pain caused by poor posture.",
+  // },
   {
     id: 14,
     title: "Tele Rehabilitation",
@@ -150,25 +151,25 @@ export const servicesData = [
     image: functional,
     description: "Goal-oriented functional training programs that build real-world strength, mobility, and stability. Ideal for post-rehab patients, athletes, and active individuals in Delhi NCR.",
   },
-  {
-    id: 18,
-    title: "Pre & Post Natal Rehabilitation",
-    slug: "pre-post-natal-rehabilitation",
-    image: Natal,
-    description: "Specialized PhysioCentric for expecting and new mothers. Addresses back pain, pelvic girdle pain, diastasis recti, and helps restore core strength safely after delivery.",
-  },
-  {
-    id: 19,
-    title: "Urinary Incontinence Rehab",
-    slug: "urinary-incontinence-rehab",
-    image: urinary,
-    description: "Effective, non-surgical PhysioCentric treatment for urinary incontinence in women and men. Regain bladder control and confidence through targeted pelvic floor rehabilitation.",
-  },
+  // {
+  //   id: 18,
+  //   title: "Pre & Post Natal Rehabilitation",
+  //   slug: "pre-post-natal-rehabilitation",
+  //   image: Natal,
+  //   description: "Specialized PhysioCentric for expecting and new mothers. Addresses back pain, pelvic girdle pain, diastasis recti, and helps restore core strength safely after delivery.",
+  // },
+  // {
+  //   id: 19,
+  //   title: "Urinary Incontinence Rehab",
+  //   slug: "urinary-incontinence-rehab",
+  //   image: urinary,
+  //   description: "Effective, non-surgical PhysioCentric treatment for urinary incontinence in women and men. Regain bladder control and confidence through targeted pelvic floor rehabilitation.",
+  // },
   {
     id: 20,
     title: "Pelvic Floor Rehabilitation",
     slug: "pelvic-floor-rehabilitation",
-    image: pelvic,
+    image: Operative,
     description: "Comprehensive pelvic floor PhysioCentric for pain, weakness, prolapse, and dysfunction. Safe, evidence-based treatment for women's and men's pelvic health conditions.",
   },
   {
@@ -192,13 +193,13 @@ export const servicesData = [
     image: pressure,
     description: "Precision core training using pressure biofeedback to activate deep stabilizing muscles, correct movement dysfunction, and build a strong, injury-resistant core.",
   },
-  {
-    id: 24,
-    title: "Sports Massage",
-    slug: "sports-massage",
-    image: massage,
-    description: "Professional sports massage therapy for muscle recovery, performance enhancement, and injury prevention. Trusted by athletes and active individuals across Delhi and Gurgaon.",
-  },
+  // {
+  //   id: 24,
+  //   title: "Sports Massage",
+  //   slug: "sports-massage",
+  //   image: massage,
+  //   description: "Professional sports massage therapy for muscle recovery, performance enhancement, and injury prevention. Trusted by athletes and active individuals across Delhi and Gurgaon.",
+  // },
   {
     id: 25,
     title: "Balance Training",
@@ -291,9 +292,9 @@ export const servicesDetailData = {
     id: 2,
     title: "Kinesiotaping",
     slug: "kinesiotaping",
-    bannerImage: Kinesiotaping,
-    mainImage: Kinesiotaping,
-    benefitImage: Kinesiotaping,
+    bannerImage: tap,
+    mainImage: tap,
+    benefitImage: tap,
     description: "Kinesiotaping is an evidence-based therapeutic taping technique used to support muscles and joints, reduce pain, and improve circulation — without restricting movement. Widely used by professional athletes and physiotherapists, it is now available at Dr. Divya Sharma clinic serving Defence Colony, Gulmohar Park, DLF, and all of Delhi NCR.",
     longDescription: "Unlike rigid sports tape, kinesiotape moves with your body, providing dynamic support while promoting natural healing. It lifts the skin microscopically, improving blood and lymphatic flow, reducing swelling, and activating the body's natural pain relief mechanisms. Our physiotherapist applies kinesiotape as part of a comprehensive treatment plan for optimal results.",
     benefits: {
@@ -351,9 +352,9 @@ export const servicesDetailData = {
 
   "muscle-stimulation": {
     id: 4, title: "Muscle Stimulation", slug: "muscle-stimulation",
-    bannerImage: muscle,
-    mainImage: muscle,
-    benefitImage: muscle,
+    bannerImage: Kinesiotaping,
+    mainImage: Kinesiotaping,
+    benefitImage: Kinesiotaping,
     description: "Electrical muscle stimulation (EMS) therapy uses controlled electrical impulses to activate muscles, reduce pain, and accelerate rehabilitation. Ideal for post-surgical recovery, muscle weakness, and neurological conditions. Available at Dr. Divya Sharma PhysioCentric clinic in South Delhi and Gurgaon.",
     longDescription: "EMS mimics the body's natural nerve signals to stimulate muscle contractions, helping to rebuild strength in weakened or atrophied muscles. It is widely used in post-operative rehab, stroke recovery, and sports medicine. Combined with targeted PhysioCentric exercises, muscle stimulation delivers measurable improvements in strength and function.",
     benefits: { title: "Benefits of Muscle Stimulation", description: "Rebuild strength and accelerate recovery with targeted electrical muscle therapy.", points: ["Prevents and reverses muscle atrophy", "Accelerates post-surgical recovery", "Improves neuromuscular control", "Reduces pain and muscle spasms"] },
@@ -433,23 +434,23 @@ export const servicesDetailData = {
     sidebar: { services: ["Manual Muscle Therapy", "Kinesiotaping", "Dry Needling", "Muscle Stimulation", "Cupping Therapy", "IASTM Therapy", "TENS Therapy", "Ultrasonic Therapy", "LASER Therapy", "Sports Injury Rehab", "Pelvic Floor Rehabilitation", "Gait Training", "Balance Training"] },
   },
 
-  "pre-post-operative-rehab": {
-    id: 11, title: "Pre & Post Operative Rehab", slug: "pre-post-operative-rehab",
-    bannerImage: Operative,
-    mainImage:Operative,
-    benefitImage: Operative,
-    description: "Structured pre-surgical conditioning (prehab) and post-operative PhysioCentric rehabilitation to minimize complications, restore strength, and achieve the fastest possible recovery after surgery. Serving patients across South Delhi and Gurgaon.",
-    longDescription: "Research consistently shows that patients who undergo prehab before surgery recover faster and with fewer complications. Our post-operative rehab protocols are designed in coordination with your surgeon to ensure safe, progressive recovery — from early mobility to full functional return.",
-    benefits: { title: "Benefits of Operative Rehab", description: "Prepare better, recover faster, and return stronger with expert surgical rehab.", points: ["Reduces surgical complications through prehab", "Faster return to daily activities post-surgery", "Minimizes post-operative pain and swelling", "Restores full strength and functional movement"] },
-    whyChoose: { title: "Why Choose Us", points: [{ title: "Surgeon-coordinated rehab protocols.", description: "We work closely with your surgical team to follow safe, evidence-based post-operative guidelines." }, { title: "Stage-wise progressive programs.", description: "Recovery is phased — from early protected movement to full functional rehabilitation." }, { title: "Hands-on and exercise-based care.", description: "Combining manual therapy, electrotherapy, and targeted exercises for optimal surgical outcomes." }, { title: "Accessible across Delhi NCR & Gurgaon.", description: "Serving Uday Park, Sarvodaya Enclave, Defence Colony, DLF, Sushant Lok, and surrounding areas." }] },
-    sidebar: { services: ["Manual Muscle Therapy", "Kinesiotaping", "Dry Needling", "Muscle Stimulation", "Cupping Therapy", "IASTM Therapy", "TENS Therapy", "Ultrasonic Therapy", "LASER Therapy", "Sports Injury Rehab", "Pre & Post Operative Rehab", "Pelvic Floor Rehabilitation", "Gait Training", "Balance Training"] },
-  },
+  // "pre-post-operative-rehab": {
+  //   id: 11, title: "Pre & Post Operative Rehab", slug: "pre-post-operative-rehab",
+  //   bannerImage: Operative,
+  //   mainImage:Operative,
+  //   benefitImage: Operative,
+  //   description: "Structured pre-surgical conditioning (prehab) and post-operative PhysioCentric rehabilitation to minimize complications, restore strength, and achieve the fastest possible recovery after surgery. Serving patients across South Delhi and Gurgaon.",
+  //   longDescription: "Research consistently shows that patients who undergo prehab before surgery recover faster and with fewer complications. Our post-operative rehab protocols are designed in coordination with your surgeon to ensure safe, progressive recovery — from early mobility to full functional return.",
+  //   benefits: { title: "Benefits of Operative Rehab", description: "Prepare better, recover faster, and return stronger with expert surgical rehab.", points: ["Reduces surgical complications through prehab", "Faster return to daily activities post-surgery", "Minimizes post-operative pain and swelling", "Restores full strength and functional movement"] },
+  //   whyChoose: { title: "Why Choose Us", points: [{ title: "Surgeon-coordinated rehab protocols.", description: "We work closely with your surgical team to follow safe, evidence-based post-operative guidelines." }, { title: "Stage-wise progressive programs.", description: "Recovery is phased — from early protected movement to full functional rehabilitation." }, { title: "Hands-on and exercise-based care.", description: "Combining manual therapy, electrotherapy, and targeted exercises for optimal surgical outcomes." }, { title: "Accessible across Delhi NCR & Gurgaon.", description: "Serving Uday Park, Sarvodaya Enclave, Defence Colony, DLF, Sushant Lok, and surrounding areas." }] },
+  //   sidebar: { services: ["Manual Muscle Therapy", "Kinesiotaping", "Dry Needling", "Muscle Stimulation", "Cupping Therapy", "IASTM Therapy", "TENS Therapy", "Ultrasonic Therapy", "LASER Therapy", "Sports Injury Rehab", "Pre & Post Operative Rehab", "Pelvic Floor Rehabilitation", "Gait Training", "Balance Training"] },
+  // },
 
   "sports-injury-rehab": {
     id: 12, title: "Sports Injury Rehab", slug: "sports-injury-rehab",
-    bannerImage: "https://i.pinimg.com/1200x/03/da/11/03da1154f58d46e605069c0a1b215595.jpg",
-    mainImage: "https://i.pinimg.com/1200x/03/da/11/03da1154f58d46e605069c0a1b215595.jpg",
-    benefitImage: "https://i.pinimg.com/736x/fd/d8/81/fdd8816b867d3b8fa54f4fac9e121c1b.jpg",
+    bannerImage: muscle,
+    mainImage: muscle,
+    benefitImage: muscle,
     description: "Comprehensive sports injury rehabilitation for athletes of all levels in South Delhi and Gurgaon. From ACL tears to shoulder dislocations, Dr. Divya Sharma designs sport-specific recovery programs to get you back in the game safely and stronger than before.",
     longDescription: "Sports injury rehab goes beyond basic recovery — it targets performance restoration, injury prevention, and sport-specific functional training. We assess the mechanism of injury, biomechanical deficiencies, and performance goals to create a tailored program that addresses the whole athlete.",
     benefits: { title: "Benefits of Sports Injury Rehab", description: "Return to your sport faster, stronger, and with reduced re-injury risk.", points: ["Rapid, evidence-based injury recovery", "Sport-specific functional training", "Injury prevention and biomechanical correction", "Safe and tested return-to-sport protocols"] },
@@ -457,17 +458,17 @@ export const servicesDetailData = {
     sidebar: { services: ["Manual Muscle Therapy", "Kinesiotaping", "Dry Needling", "Muscle Stimulation", "Cupping Therapy", "IASTM Therapy", "TENS Therapy", "Ultrasonic Therapy", "LASER Therapy", "Sports Injury Rehab", "Pelvic Floor Rehabilitation", "Gait Training", "Balance Training"] },
   },
 
-  "posture-correction-training": {
-    id: 13, title: "Posture Correction Training", slug: "posture-correction-training",
-    bannerImage: posture,
-    mainImage: posture,
-    benefitImage: posture,
-    description: "Scientifically designed posture correction therapy to address forward head posture, rounded shoulders, thoracic kyphosis, and spinal misalignment — the leading causes of chronic neck, back, and shoulder pain among desk workers and students in Delhi and Gurgaon.",
-    longDescription: "Poor posture is an epidemic driven by prolonged sitting, screen time, and sedentary habits. Our posture correction program begins with a thorough postural assessment, followed by targeted manual therapy, corrective exercises, and ergonomic education — creating permanent, lasting improvement.",
-    benefits: { title: "Benefits of Posture Correction", description: "Stand tall, move freely, and eliminate chronic pain caused by poor posture.", points: ["Eliminates chronic neck and back pain", "Improves spinal alignment and core stability", "Enhances breathing capacity and energy levels", "Prevents long-term spinal degeneration"] },
-    whyChoose: { title: "Why Choose Us", points: [{ title: "Detailed postural assessment.", description: "We perform thorough static and dynamic postural analysis to identify the root cause of your dysfunction." }, { title: "Tailored correction program.", description: "Your program includes manual therapy, stretching, strengthening, and movement re-education." }, { title: "Ergonomic advice included.", description: "We guide you on workstation setup, sleeping postures, and daily habits to maintain improvements." }, { title: "Serving South Delhi & Gurgaon.", description: "Accessible for patients from Hauz Khas, Panchsheel Park, DLF, Sikanderpur, and nearby areas." }] },
-    sidebar: { services: ["Manual Muscle Therapy", "Kinesiotaping", "Dry Needling", "Muscle Stimulation", "Cupping Therapy", "IASTM Therapy", "TENS Therapy", "Ultrasonic Therapy", "LASER Therapy", "Sports Injury Rehab", "Posture Correction Training", "Gait Training", "Balance Training"] },
-  },
+  // "posture-correction-training": {
+  //   id: 13, title: "Posture Correction Training", slug: "posture-correction-training",
+  //   bannerImage: posture,
+  //   mainImage: posture,
+  //   benefitImage: posture,
+  //   description: "Scientifically designed posture correction therapy to address forward head posture, rounded shoulders, thoracic kyphosis, and spinal misalignment — the leading causes of chronic neck, back, and shoulder pain among desk workers and students in Delhi and Gurgaon.",
+  //   longDescription: "Poor posture is an epidemic driven by prolonged sitting, screen time, and sedentary habits. Our posture correction program begins with a thorough postural assessment, followed by targeted manual therapy, corrective exercises, and ergonomic education — creating permanent, lasting improvement.",
+  //   benefits: { title: "Benefits of Posture Correction", description: "Stand tall, move freely, and eliminate chronic pain caused by poor posture.", points: ["Eliminates chronic neck and back pain", "Improves spinal alignment and core stability", "Enhances breathing capacity and energy levels", "Prevents long-term spinal degeneration"] },
+  //   whyChoose: { title: "Why Choose Us", points: [{ title: "Detailed postural assessment.", description: "We perform thorough static and dynamic postural analysis to identify the root cause of your dysfunction." }, { title: "Tailored correction program.", description: "Your program includes manual therapy, stretching, strengthening, and movement re-education." }, { title: "Ergonomic advice included.", description: "We guide you on workstation setup, sleeping postures, and daily habits to maintain improvements." }, { title: "Serving South Delhi & Gurgaon.", description: "Accessible for patients from Hauz Khas, Panchsheel Park, DLF, Sikanderpur, and nearby areas." }] },
+  //   sidebar: { services: ["Manual Muscle Therapy", "Kinesiotaping", "Dry Needling", "Muscle Stimulation", "Cupping Therapy", "IASTM Therapy", "TENS Therapy", "Ultrasonic Therapy", "LASER Therapy", "Sports Injury Rehab", "Posture Correction Training", "Gait Training", "Balance Training"] },
+  // },
 
   "tele-rehabilitation": {
     id: 14, title: "Tele Rehabilitation", slug: "tele-rehabilitation",
@@ -517,35 +518,35 @@ export const servicesDetailData = {
     sidebar: { services: ["Movement Assessment", "Biomechanical Correction Rehab", "Functional Training", "Sports Injury Rehab", "Posture Correction Training", "Balance Training", "Gait Training"] },
   },
 
-  "pre-post-natal-rehabilitation": {
-    id: 18, title: "Pre & Post Natal Rehabilitation", slug: "pre-post-natal-rehabilitation",
-    bannerImage: Natal,
-    mainImage: Natal,
-    benefitImage: Natal,
-    description: "Specialized PhysioCentric for women during and after pregnancy. Addresses back pain, pelvic girdle pain, diastasis recti, and pelvic floor weakness — helping mothers in South Delhi and Gurgaon stay strong, pain-free, and recover fully after childbirth.",
-    longDescription: "Pregnancy and childbirth place enormous demands on a woman's body. Our pre- and post-natal rehabilitation program is designed by a physiotherapist experienced in women's health — offering safe, gentle, and evidence-based care through every stage of the motherhood journey.",
-    benefits: { title: "Benefits of Natal Rehabilitation", description: "Support your body through pregnancy and regain full strength after delivery.", points: ["Relieves pregnancy-related back and pelvic pain", "Strengthens core and pelvic floor safely", "Treats diastasis recti after delivery", "Restores functional fitness for new mothers"] },
-    whyChoose: { title: "Why Choose Us", points: [{ title: "Women's health PhysioCentric expertise.", description: "Dr. Divya Sharma has specialized training in ante and postnatal PhysioCentric and pelvic health." }, { title: "Safe, evidence-based protocols.", description: "All exercises and treatments are safe for pregnancy and postpartum recovery based on clinical guidelines." }, { title: "Comprehensive pelvic assessment.", description: "Includes evaluation of pelvic floor function, core stability, and postural changes during pregnancy." }, { title: "Serving South Delhi & Gurgaon.", description: "Easily reachable from Niti Bagh, Hauz Khas, DLF Phase 1–5, Nirvana Country, and Garden Estate." }] },
-    sidebar: { services: ["Pre & Post Natal Rehabilitation", "Pelvic Floor Rehabilitation", "Urinary Incontinence Rehab", "Manual Muscle Therapy", "Posture Correction Training", "Functional Training"] },
-  },
+  // "pre-post-natal-rehabilitation": {
+  //   id: 18, title: "Pre & Post Natal Rehabilitation", slug: "pre-post-natal-rehabilitation",
+  //   bannerImage: Natal,
+  //   mainImage: Natal,
+  //   benefitImage: Natal,
+  //   description: "Specialized PhysioCentric for women during and after pregnancy. Addresses back pain, pelvic girdle pain, diastasis recti, and pelvic floor weakness — helping mothers in South Delhi and Gurgaon stay strong, pain-free, and recover fully after childbirth.",
+  //   longDescription: "Pregnancy and childbirth place enormous demands on a woman's body. Our pre- and post-natal rehabilitation program is designed by a physiotherapist experienced in women's health — offering safe, gentle, and evidence-based care through every stage of the motherhood journey.",
+  //   benefits: { title: "Benefits of Natal Rehabilitation", description: "Support your body through pregnancy and regain full strength after delivery.", points: ["Relieves pregnancy-related back and pelvic pain", "Strengthens core and pelvic floor safely", "Treats diastasis recti after delivery", "Restores functional fitness for new mothers"] },
+  //   whyChoose: { title: "Why Choose Us", points: [{ title: "Women's health PhysioCentric expertise.", description: "Dr. Divya Sharma has specialized training in ante and postnatal PhysioCentric and pelvic health." }, { title: "Safe, evidence-based protocols.", description: "All exercises and treatments are safe for pregnancy and postpartum recovery based on clinical guidelines." }, { title: "Comprehensive pelvic assessment.", description: "Includes evaluation of pelvic floor function, core stability, and postural changes during pregnancy." }, { title: "Serving South Delhi & Gurgaon.", description: "Easily reachable from Niti Bagh, Hauz Khas, DLF Phase 1–5, Nirvana Country, and Garden Estate." }] },
+  //   sidebar: { services: ["Pre & Post Natal Rehabilitation", "Pelvic Floor Rehabilitation", "Urinary Incontinence Rehab", "Manual Muscle Therapy", "Posture Correction Training", "Functional Training"] },
+  // },
 
-  "urinary-incontinence-rehab": {
-    id: 19, title: "Urinary Incontinence Rehab", slug: "urinary-incontinence-rehab",
-    bannerImage: urinary,
-    mainImage: urinary,
-    benefitImage: urinary,
-    description: "Effective, non-surgical PhysioCentric treatment for stress, urge, and mixed urinary incontinence in women and men. Regain bladder control and confidence through targeted pelvic floor rehabilitation at Dr. Divya Sharma clinic in Delhi and Gurgaon.",
-    longDescription: "Urinary incontinence affects millions and is largely treatable through PhysioCentric — without surgery or lifelong medication. Our rehabilitation program addresses the underlying pelvic floor dysfunction causing leakage, using evidence-based techniques to restore bladder control.",
-    benefits: { title: "Benefits of Incontinence Rehab", description: "Regain control, confidence, and quality of life — naturally.", points: ["Restores bladder control without surgery", "Effective for stress, urge, and mixed incontinence", "Strengthens and coordinates pelvic floor muscles", "Improves quality of life and daily confidence"] },
-    whyChoose: { title: "Why Choose Us", points: [{ title: "Specialized pelvic health expertise.", description: "Dr. Divya Sharma is trained in pelvic floor assessment and rehabilitation for continence conditions." }, { title: "Private, sensitive, and respectful care.", description: "We provide a confidential, comfortable environment for discussing and treating continence issues." }, { title: "Non-invasive, drug-free treatment.", description: "PhysioCentric is a first-line recommended treatment for incontinence, avoiding surgery and medication." }, { title: "Serving South Delhi & Gurgaon.", description: "Accessible for patients from Uday Park, Anand Lok, Sushant Lok, Sikanderpur, and surrounding areas." }] },
-    sidebar: { services: ["Pre & Post Natal Rehabilitation", "Pelvic Floor Rehabilitation", "Urinary Incontinence Rehab", "Manual Muscle Therapy", "Functional Training"] },
-  },
+  // "urinary-incontinence-rehab": {
+  //   id: 19, title: "Urinary Incontinence Rehab", slug: "urinary-incontinence-rehab",
+  //   bannerImage: urinary,
+  //   mainImage: urinary,
+  //   benefitImage: urinary,
+  //   description: "Effective, non-surgical PhysioCentric treatment for stress, urge, and mixed urinary incontinence in women and men. Regain bladder control and confidence through targeted pelvic floor rehabilitation at Dr. Divya Sharma clinic in Delhi and Gurgaon.",
+  //   longDescription: "Urinary incontinence affects millions and is largely treatable through PhysioCentric — without surgery or lifelong medication. Our rehabilitation program addresses the underlying pelvic floor dysfunction causing leakage, using evidence-based techniques to restore bladder control.",
+  //   benefits: { title: "Benefits of Incontinence Rehab", description: "Regain control, confidence, and quality of life — naturally.", points: ["Restores bladder control without surgery", "Effective for stress, urge, and mixed incontinence", "Strengthens and coordinates pelvic floor muscles", "Improves quality of life and daily confidence"] },
+  //   whyChoose: { title: "Why Choose Us", points: [{ title: "Specialized pelvic health expertise.", description: "Dr. Divya Sharma is trained in pelvic floor assessment and rehabilitation for continence conditions." }, { title: "Private, sensitive, and respectful care.", description: "We provide a confidential, comfortable environment for discussing and treating continence issues." }, { title: "Non-invasive, drug-free treatment.", description: "PhysioCentric is a first-line recommended treatment for incontinence, avoiding surgery and medication." }, { title: "Serving South Delhi & Gurgaon.", description: "Accessible for patients from Uday Park, Anand Lok, Sushant Lok, Sikanderpur, and surrounding areas." }] },
+  //   sidebar: { services: ["Pre & Post Natal Rehabilitation", "Pelvic Floor Rehabilitation", "Urinary Incontinence Rehab", "Manual Muscle Therapy", "Functional Training"] },
+  // },
 
   "pelvic-floor-rehabilitation": {
     id: 20, title: "Pelvic Floor Rehabilitation", slug: "pelvic-floor-rehabilitation",
-    bannerImage: pelvic,
-    mainImage:pelvic,
-    benefitImage: pelvic,
+    bannerImage: Operative,
+    mainImage:Operative,
+    benefitImage: Operative,
     description: "Comprehensive pelvic floor PhysioCentric for pain, weakness, prolapse, and dysfunction in women and men. Evidence-based, non-invasive treatment to restore pelvic health and improve quality of life — available at Dr. Divya Sharma clinic in South Delhi and Gurgaon.",
     longDescription: "The pelvic floor is a group of muscles supporting the bladder, bowel, and uterus. Dysfunction in these muscles causes a wide range of problems — incontinence, pelvic pain, prolapse, and sexual dysfunction. Our pelvic floor rehabilitation uses thorough assessment and targeted therapy to restore optimal function.",
     benefits: { title: "Benefits of Pelvic Floor Rehabilitation", description: "Restore pelvic strength, control, and comfort with expert PhysioCentric.", points: ["Treats incontinence, prolapse, and pelvic pain", "Restores pelvic floor strength and coordination", "Non-invasive alternative to surgery", "Improves sexual health and daily quality of life"] },
@@ -589,17 +590,17 @@ export const servicesDetailData = {
     sidebar: { services: ["Pressure Biofeedback Core Training", "Pelvic Floor Rehabilitation", "Posture Correction Training", "Functional Training", "Manual Muscle Therapy", "Biomechanical Correction Rehab"] },
   },
 
-  "sports-massage": {
-    id: 24, title: "Sports Massage", slug: "sports-massage",
-    bannerImage: massage,
-    mainImage: massage,
-    benefitImage:massage,
-    description: "Professional sports massage therapy for muscle recovery, pre-event preparation, and injury prevention. Trusted by athletes and fitness enthusiasts across South Delhi and Gurgaon for enhanced performance and faster recovery.",
-    longDescription: "Sports massage is a targeted, clinically applied form of massage therapy that addresses the specific demands placed on athletes' bodies. It reduces muscle soreness, improves circulation, breaks down adhesions, and prepares muscles for peak performance — before, during, or after training and competition.",
-    benefits: { title: "Benefits of Sports Massage", description: "Recover faster, train harder, and perform better with expert sports massage.", points: ["Reduces delayed onset muscle soreness (DOMS)", "Improves circulation and tissue oxygenation", "Breaks down adhesions and scar tissue", "Enhances flexibility and range of motion"] },
-    whyChoose: { title: "Why Choose Us", points: [{ title: "Physiotherapist-led sports massage.", description: "Unlike generic massage, our sports massage is clinically directed based on your training and injury history." }, { title: "Pre and post-event protocols.", description: "Specific techniques for pre-event activation and post-event recovery to optimize your performance." }, { title: "Integrated with injury rehab.", description: "Sports massage complements dry needling, manual therapy, and exercise rehab for complete results." }, { title: "Serving Delhi NCR & Gurgaon.", description: "Accessible from Defence Colony, Gulmohar Park, DLF Phase 1–5, Garden Estate, and Sultanpur." }] },
-    sidebar: { services: ["Sports Massage", "Manual Muscle Therapy", "Cupping Therapy", "Dry Needling", "IASTM Therapy", "Sports Injury Rehab", "Kinesiotaping"] },
-  },
+  // "sports-massage": {
+  //   id: 24, title: "Sports Massage", slug: "sports-massage",
+  //   bannerImage: massage,
+  //   mainImage: massage,
+  //   benefitImage:massage,
+  //   description: "Professional sports massage therapy for muscle recovery, pre-event preparation, and injury prevention. Trusted by athletes and fitness enthusiasts across South Delhi and Gurgaon for enhanced performance and faster recovery.",
+  //   longDescription: "Sports massage is a targeted, clinically applied form of massage therapy that addresses the specific demands placed on athletes' bodies. It reduces muscle soreness, improves circulation, breaks down adhesions, and prepares muscles for peak performance — before, during, or after training and competition.",
+  //   benefits: { title: "Benefits of Sports Massage", description: "Recover faster, train harder, and perform better with expert sports massage.", points: ["Reduces delayed onset muscle soreness (DOMS)", "Improves circulation and tissue oxygenation", "Breaks down adhesions and scar tissue", "Enhances flexibility and range of motion"] },
+  //   whyChoose: { title: "Why Choose Us", points: [{ title: "Physiotherapist-led sports massage.", description: "Unlike generic massage, our sports massage is clinically directed based on your training and injury history." }, { title: "Pre and post-event protocols.", description: "Specific techniques for pre-event activation and post-event recovery to optimize your performance." }, { title: "Integrated with injury rehab.", description: "Sports massage complements dry needling, manual therapy, and exercise rehab for complete results." }, { title: "Serving Delhi NCR & Gurgaon.", description: "Accessible from Defence Colony, Gulmohar Park, DLF Phase 1–5, Garden Estate, and Sultanpur." }] },
+  //   sidebar: { services: ["Sports Massage", "Manual Muscle Therapy", "Cupping Therapy", "Dry Needling", "IASTM Therapy", "Sports Injury Rehab", "Kinesiotaping"] },
+  // },
 
   "balance-training": {
     id: 25, title: "Balance Training", slug: "balance-training",
